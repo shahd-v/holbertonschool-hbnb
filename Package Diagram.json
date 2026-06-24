@@ -1,0 +1,136 @@
+{
+  "version": "30.2.5",
+  "data": "<mxfile host=\"app.diagrams.net\"><diagram name=\"Page-1\" id=\"lLUCKp-kXkbOZAwQaVFA\"><mxGraphModel dx=\"1058\" dy=\"735\" grid=\"1\" gridSize=\"10\" guides=\"1\" tooltips=\"1\" connect=\"1\" arrows=\"1\" fold=\"1\" page=\"1\" pageScale=\"1\" pageWidth=\"850\" pageHeight=\"1100\" math=\"0\" shadow=\"0\"><root><mxCell id=\"0\"/><mxCell id=\"1\" parent=\"0\"/><mxCell id=\"8ghQBf9fKRmHqCWiQ-SG-1\" parent=\"1\" style=\"shape=folder;fontStyle=1;spacingTop=10;tabWidth=40;tabHeight=14;tabPosition=left;html=1;whiteSpace=wrap;\" value=\"user\" vertex=\"1\"><mxGeometry height=\"60\" width=\"90\" x=\"160\" y=\"140\" as=\"geometry\"/></mxCell><mxCell id=\"8ghQBf9fKRmHqCWiQ-SG-2\" parent=\"1\" style=\"shape=folder;fontStyle=1;spacingTop=10;tabWidth=40;tabHeight=14;tabPosition=left;html=1;whiteSpace=wrap;\" value=\"Facade\" vertex=\"1\"><mxGeometry height=\"60\" width=\"90\" x=\"400\" y=\"310\" as=\"geometry\"/></mxCell><mxCell id=\"8ghQBf9fKRmHqCWiQ-SG-3\" parent=\"1\" style=\"shape=folder;fontStyle=1;spacingTop=10;tabWidth=40;tabHeight=14;tabPosition=left;html=1;whiteSpace=wrap;\" value=\"Data\" vertex=\"1\"><mxGeometry height=\"60\" width=\"90\" x=\"160\" y=\"650\" as=\"geometry\"/></mxCell><mxCell id=\"8ghQBf9fKRmHqCWiQ-SG-29\" edge=\"1\" parent=\"1\" source=\"8ghQBf9fKRmHqCWiQ-SG-5\" style=\"edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;\" target=\"8ghQBf9fKRmHqCWiQ-SG-2\"><mxGeometry relative=\"1\" as=\"geometry\"/></mxCell><mxCell id=\"8ghQBf9fKRmHqCWiQ-SG-5\" parent=\"1\" style=\"shape=folder;fontStyle=1;tabWidth=110;tabHeight=30;tabPosition=left;html=1;boundedLbl=1;labelInHeader=1;container=1;collapsible=0;recursiveResize=0;whiteSpace=wrap;\" value=\"Presentation layer\" vertex=\"1\"><mxGeometry height=\"170\" width=\"150\" x=\"370\" y=\"90\" as=\"geometry\"/></mxCell><mxCell id=\"8ghQBf9fKRmHqCWiQ-SG-6\" parent=\"8ghQBf9fKRmHqCWiQ-SG-5\" style=\"html=1;whiteSpace=wrap;\" value=\"API Endpoint\" vertex=\"1\"><mxGeometry height=\"30\" relative=\"1\" width=\"110\" as=\"geometry\"><mxPoint x=\"20\" y=\"50\" as=\"offset\"/></mxGeometry></mxCell><mxCell id=\"8ghQBf9fKRmHqCWiQ-SG-20\" parent=\"8ghQBf9fKRmHqCWiQ-SG-5\" style=\"html=1;whiteSpace=wrap;\" value=\"Services\" vertex=\"1\"><mxGeometry height=\"30\" width=\"110\" x=\"20\" y=\"110\" as=\"geometry\"/></mxCell><mxCell id=\"8ghQBf9fKRmHqCWiQ-SG-21\" edge=\"1\" parent=\"1\" source=\"8ghQBf9fKRmHqCWiQ-SG-1\" style=\"edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0;exitDx=90;exitDy=37;exitPerimeter=0;entryX=0.013;entryY=0.512;entryDx=0;entryDy=0;entryPerimeter=0;\" target=\"8ghQBf9fKRmHqCWiQ-SG-5\"><mxGeometry relative=\"1\" as=\"geometry\"/></mxCell><mxCell id=\"8ghQBf9fKRmHqCWiQ-SG-39\" edge=\"1\" parent=\"1\" source=\"8ghQBf9fKRmHqCWiQ-SG-22\" style=\"edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;\" target=\"8ghQBf9fKRmHqCWiQ-SG-25\"><mxGeometry relative=\"1\" as=\"geometry\"/></mxCell><mxCell id=\"8ghQBf9fKRmHqCWiQ-SG-22\" parent=\"1\" style=\"shape=folder;fontStyle=1;tabWidth=110;tabHeight=30;tabPosition=left;html=1;boundedLbl=1;labelInHeader=1;container=1;collapsible=0;recursiveResize=0;whiteSpace=wrap;\" value=\"Business layer\" vertex=\"1\"><mxGeometry height=\"170\" width=\"310\" x=\"290\" y=\"400\" as=\"geometry\"/></mxCell><mxCell id=\"8ghQBf9fKRmHqCWiQ-SG-23\" parent=\"8ghQBf9fKRmHqCWiQ-SG-22\" style=\"html=1;whiteSpace=wrap;\" value=\"User\" vertex=\"1\"><mxGeometry height=\"30\" relative=\"1\" width=\"110\" as=\"geometry\"><mxPoint x=\"20\" y=\"50\" as=\"offset\"/></mxGeometry></mxCell><mxCell id=\"8ghQBf9fKRmHqCWiQ-SG-24\" parent=\"8ghQBf9fKRmHqCWiQ-SG-22\" style=\"html=1;whiteSpace=wrap;\" value=\"Place\" vertex=\"1\"><mxGeometry height=\"30\" width=\"110\" x=\"20\" y=\"110\" as=\"geometry\"/></mxCell><mxCell id=\"8ghQBf9fKRmHqCWiQ-SG-33\" parent=\"8ghQBf9fKRmHqCWiQ-SG-22\" style=\"html=1;whiteSpace=wrap;\" value=\"Review\" vertex=\"1\"><mxGeometry height=\"30\" width=\"110\" x=\"170\" y=\"50\" as=\"geometry\"/></mxCell><mxCell id=\"8ghQBf9fKRmHqCWiQ-SG-34\" parent=\"8ghQBf9fKRmHqCWiQ-SG-22\" style=\"html=1;whiteSpace=wrap;\" value=\"Amenity\" vertex=\"1\"><mxGeometry height=\"30\" width=\"110\" x=\"170\" y=\"110\" as=\"geometry\"/></mxCell><mxCell id=\"8ghQBf9fKRmHqCWiQ-SG-25\" parent=\"1\" style=\"shape=folder;fontStyle=1;tabWidth=110;tabHeight=30;tabPosition=left;html=1;boundedLbl=1;labelInHeader=1;container=1;collapsible=0;recursiveResize=0;whiteSpace=wrap;\" value=\"&lt;div style=&quot;text-align: start;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Persistence layer&lt;/span&gt;&lt;/div&gt;\" vertex=\"1\"><mxGeometry height=\"170\" width=\"150\" x=\"370\" y=\"620\" as=\"geometry\"/></mxCell><mxCell id=\"8ghQBf9fKRmHqCWiQ-SG-26\" parent=\"8ghQBf9fKRmHqCWiQ-SG-25\" style=\"html=1;whiteSpace=wrap;\" value=\"Database\" vertex=\"1\"><mxGeometry height=\"30\" relative=\"1\" width=\"110\" as=\"geometry\"><mxPoint x=\"20\" y=\"50\" as=\"offset\"/></mxGeometry></mxCell><mxCell id=\"8ghQBf9fKRmHqCWiQ-SG-27\" parent=\"8ghQBf9fKRmHqCWiQ-SG-25\" style=\"html=1;whiteSpace=wrap;\" value=\"Repository\" vertex=\"1\"><mxGeometry height=\"30\" width=\"110\" x=\"20\" y=\"110\" as=\"geometry\"/></mxCell><mxCell id=\"8ghQBf9fKRmHqCWiQ-SG-42\" edge=\"1\" parent=\"1\" source=\"8ghQBf9fKRmHqCWiQ-SG-25\" style=\"edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0;exitDx=0;exitDy=100;exitPerimeter=0;entryX=0;entryY=0;entryDx=90;entryDy=37;entryPerimeter=0;\" target=\"8ghQBf9fKRmHqCWiQ-SG-3\"><mxGeometry relative=\"1\" as=\"geometry\"/></mxCell><mxCell id=\"8ghQBf9fKRmHqCWiQ-SG-44\" edge=\"1\" parent=\"1\" source=\"8ghQBf9fKRmHqCWiQ-SG-2\" style=\"edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0.182;entryDx=0;entryDy=0;entryPerimeter=0;\" target=\"8ghQBf9fKRmHqCWiQ-SG-22\"><mxGeometry relative=\"1\" as=\"geometry\"/></mxCell></root></mxGraphModel></diagram></mxfile>",
+  "pages": [
+    {
+      "id": "lLUCKp-kXkbOZAwQaVFA",
+      "name": "Page-1",
+      "cells": [
+        {
+          "id": "1",
+          "type": "layer"
+        },
+        {
+          "id": "8ghQBf9fKRmHqCWiQ-SG-1",
+          "type": "node",
+          "parent": "1",
+          "label": "user"
+        },
+        {
+          "id": "8ghQBf9fKRmHqCWiQ-SG-2",
+          "type": "node",
+          "parent": "1",
+          "label": "Facade"
+        },
+        {
+          "id": "8ghQBf9fKRmHqCWiQ-SG-3",
+          "type": "node",
+          "parent": "1",
+          "label": "Data"
+        },
+        {
+          "id": "8ghQBf9fKRmHqCWiQ-SG-29",
+          "type": "edge",
+          "parent": "1",
+          "source": "8ghQBf9fKRmHqCWiQ-SG-5",
+          "target": "8ghQBf9fKRmHqCWiQ-SG-2"
+        },
+        {
+          "id": "8ghQBf9fKRmHqCWiQ-SG-5",
+          "type": "node",
+          "parent": "1",
+          "label": "Presentation layer"
+        },
+        {
+          "id": "8ghQBf9fKRmHqCWiQ-SG-6",
+          "type": "node",
+          "parent": "8ghQBf9fKRmHqCWiQ-SG-5",
+          "label": "API Endpoint"
+        },
+        {
+          "id": "8ghQBf9fKRmHqCWiQ-SG-20",
+          "type": "node",
+          "parent": "8ghQBf9fKRmHqCWiQ-SG-5",
+          "label": "Services"
+        },
+        {
+          "id": "8ghQBf9fKRmHqCWiQ-SG-21",
+          "type": "edge",
+          "parent": "1",
+          "source": "8ghQBf9fKRmHqCWiQ-SG-1",
+          "target": "8ghQBf9fKRmHqCWiQ-SG-5"
+        },
+        {
+          "id": "8ghQBf9fKRmHqCWiQ-SG-39",
+          "type": "edge",
+          "parent": "1",
+          "source": "8ghQBf9fKRmHqCWiQ-SG-22",
+          "target": "8ghQBf9fKRmHqCWiQ-SG-25"
+        },
+        {
+          "id": "8ghQBf9fKRmHqCWiQ-SG-22",
+          "type": "node",
+          "parent": "1",
+          "label": "Business layer"
+        },
+        {
+          "id": "8ghQBf9fKRmHqCWiQ-SG-23",
+          "type": "node",
+          "parent": "8ghQBf9fKRmHqCWiQ-SG-22",
+          "label": "User"
+        },
+        {
+          "id": "8ghQBf9fKRmHqCWiQ-SG-24",
+          "type": "node",
+          "parent": "8ghQBf9fKRmHqCWiQ-SG-22",
+          "label": "Place"
+        },
+        {
+          "id": "8ghQBf9fKRmHqCWiQ-SG-33",
+          "type": "node",
+          "parent": "8ghQBf9fKRmHqCWiQ-SG-22",
+          "label": "Review"
+        },
+        {
+          "id": "8ghQBf9fKRmHqCWiQ-SG-34",
+          "type": "node",
+          "parent": "8ghQBf9fKRmHqCWiQ-SG-22",
+          "label": "Amenity"
+        },
+        {
+          "id": "8ghQBf9fKRmHqCWiQ-SG-25",
+          "type": "node",
+          "parent": "1",
+          "label": "Persistence layer",
+          "html": "<div style=\"text-align: start;\"><span style=\"background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));\">Persistence layer</span></div>"
+        },
+        {
+          "id": "8ghQBf9fKRmHqCWiQ-SG-26",
+          "type": "node",
+          "parent": "8ghQBf9fKRmHqCWiQ-SG-25",
+          "label": "Database"
+        },
+        {
+          "id": "8ghQBf9fKRmHqCWiQ-SG-27",
+          "type": "node",
+          "parent": "8ghQBf9fKRmHqCWiQ-SG-25",
+          "label": "Repository"
+        },
+        {
+          "id": "8ghQBf9fKRmHqCWiQ-SG-42",
+          "type": "edge",
+          "parent": "1",
+          "source": "8ghQBf9fKRmHqCWiQ-SG-25",
+          "target": "8ghQBf9fKRmHqCWiQ-SG-3"
+        },
+        {
+          "id": "8ghQBf9fKRmHqCWiQ-SG-44",
+          "type": "edge",
+          "parent": "1",
+          "source": "8ghQBf9fKRmHqCWiQ-SG-2",
+          "target": "8ghQBf9fKRmHqCWiQ-SG-22"
+        }
+      ]
+    }
+  ]
+}

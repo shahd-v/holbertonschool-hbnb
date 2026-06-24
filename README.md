@@ -8,3 +8,21 @@ class presentation level{
 +API
 }
 ```
+
+### Task 0 — Package Diagram Pattern
+``` md
+``` mermaid
+graph TB
+    subgraph Presentation
+        API["FastAPI Endpoints"]
+    end
+    subgraph BusinessLogic
+        Facade["Facade Service"]
+    end
+    subgraph Persistence
+        DB["Database Repository"]
+    end
+    
+    API --> Facade : "Requests"
+    Facade --> DB : "Queries/Commands"
+

@@ -10,7 +10,7 @@ class presentation level{
 ```
 
 ### Task 0 — Package Diagram Pattern
-``` md
+
 ``` mermaid
 graph TB
     subgraph Presentation

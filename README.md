@@ -2,7 +2,7 @@
 High levle Package diagram
 
 ```mermaid
-class diagram
+classDiagram
 class presentation level{ 
 +services
 +API

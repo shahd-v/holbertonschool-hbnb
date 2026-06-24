@@ -25,4 +25,4 @@ graph TB
     
     API --> Facade : "Requests"
     Facade --> DB : "Queries/Commands"
-
+```

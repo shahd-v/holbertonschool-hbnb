@@ -32,6 +32,7 @@
 
 ### Sequence diagram
 
+#### User Registration
 ```mermaid
 sequenceDiagram
 participant User
@@ -46,6 +47,25 @@ Database-->>BusinessLogic: Confirm Save
 BusinessLogic-->>API: Return Response
 API-->>User: Return Success/Failure
 ```
+#### Place Creation
+```mermaid
+sequenceDiagram
+participant User
+participant API
+participant BusinessLogic
+participant Database
+
+User->>API: API Call (post)
+API->>BusinessLogic: create ()
+BusinessLogic->>Database: INSERT INTO places (UUID, title, description, price, latitude, longitude, created_at, updated_at)
+Database-->>BusinessLogic: Confirm Save
+BusinessLogic-->>API: Return Response
+API-->>User: Return Success/Failure
+```
+#### Review Submission
+
+
+#### Fetching a List of Places
 
 ## API ( Usage & Discription )
 

@@ -63,6 +63,20 @@ BusinessLogic-->>API: Return Response
 API-->>User: Return Success/Failure
 ```
 #### Review Submission
+```mermaid
+sequenceDiagram
+participant User
+participant API
+participant BusinessLogic
+participant Database
+
+User->>API: API Call (post)
+API->>BusinessLogic: create ()
+BusinessLogic->>Database: INSERT INTO reviews (UUID, rating, comment, created_at, updated_at)
+Database-->>BusinessLogic: Confirm Save
+BusinessLogic-->>API: Return Response
+API-->>User: Return Success/Failure
+```
 
 
 #### Fetching a List of Places

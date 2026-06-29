@@ -39,9 +39,9 @@ participant API
 participant BusinessLogic
 participant Database
 
-User->>API: API Call (e.g., Register User)
-API->>BusinessLogic: Validate and Process Request
-BusinessLogic->>Database: Save Data
+User->>API: API Call (post)
+API->>BusinessLogic: register ()
+BusinessLogic->>Database: INSERT INTO users (UUID, first_name, last_name, email, password, created_at, updated_at)
 Database-->>BusinessLogic: Confirm Save
 BusinessLogic-->>API: Return Response
 API-->>User: Return Success/Failure

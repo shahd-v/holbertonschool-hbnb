@@ -28,7 +28,7 @@
 
 ### Class diagram
 
-![Package Diagram](Class%20Diagram.png)
+![Class Diagram](Class%20Diagram.png)
 
 ## API ( Usage & Discription )
 

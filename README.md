@@ -29,7 +29,7 @@
 ### Class diagram
 
 ![Class Diagram](Class%20Diagram.png)
-
+---
 ### Sequence diagram
 
 #### User Registration
@@ -47,6 +47,7 @@ Database-->>BusinessLogic: Confirm Save
 BusinessLogic-->>API: Return Response
 API-->>User: Return Success/Failure
 ```
+
 #### Place Creation
 ```mermaid
 sequenceDiagram
@@ -62,6 +63,7 @@ Database-->>BusinessLogic: Confirm Save
 BusinessLogic-->>API: Return Response
 API-->>User: Return Success/Failure
 ```
+
 #### Review Submission
 ```mermaid
 sequenceDiagram

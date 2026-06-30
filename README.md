@@ -82,6 +82,20 @@ API-->>User: Return Success/Failure
 
 
 #### Fetching a List of Places
+```mermaid
+sequenceDiagram
+participant User
+participant API
+participant BusinessLogic
+participant Database
+
+User->>API: API Call (GET)
+API->>BusinessLogic: list ()
+BusinessLogic->>Database: SELECT * FROM places WHERE price BETWEEN 2000 AND 5000
+Database-->>BusinessLogic: Confirm Save
+BusinessLogic-->>API: Return Response
+API-->>User: Return Success/Failure
+```
 
 ## API ( Usage & Discription )
 

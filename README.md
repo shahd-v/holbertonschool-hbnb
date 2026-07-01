@@ -35,6 +35,9 @@ This project is an elevated vertion of Airbnb where the user is allowed to:
 
 ![Class Diagram](part1/Class_Diagram.drawio.png)
 
+
+Communication between the Presentation layer and Business Logic layer is handled through a **facade pattern**, meaning the API only interacts with a single unified interface rather than calling business logic classes directly. This reduces coupling and makes the system easier to maintain and extend.
+
 This diagram illustrates the three-layer architecture of the HBnB application:
 - **Presentation Layer**
 - **Business Logic Layer**

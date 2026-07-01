@@ -75,9 +75,9 @@ participant Database
 User->>API: API Call (post)
 API->>BusinessLogic: create ()
 BusinessLogic->>Database: INSERT INTO reviews (UUID, rating, comment, created_at, updated_at)
-Database-->>BusinessLogic: Confirm Save
-BusinessLogic-->>API: Return Response
-API-->>User: Return Success/Failure
+Database-->>BusinessLogic: Return review_id
+BusinessLogic-->>API: Return created review object
+API-->>User: 201 Created
 ```
 
 

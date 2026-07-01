@@ -33,7 +33,7 @@
 ### Sequence diagram
 
 #### User Registration
-User story: As a new visitor, I want to register an account with my personal details, so that I can access the platform's features as an authenticated user.
+User story: As a new User, I want to register an account with my personal details, so that I can access the platform's features as an authenticated user.
 ```mermaid
 sequenceDiagram
 participant User

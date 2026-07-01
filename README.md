@@ -92,9 +92,13 @@ participant Database
 User->>API: API Call (GET)
 API->>BusinessLogic: list ()
 BusinessLogic->>Database: SELECT * FROM places WHERE price BETWEEN 2000 AND 5000
-Database-->>BusinessLogic: Confirm Save
-BusinessLogic-->>API: Return Response
-API-->>User: Return Success/Failure
+Database-->>BusinessLogic: Return matching places
+loop
+BusinessLogic->>Database: SELECT * FROM reviews WHERE place_id = place.id
+BusinessLogic->>Database: SELECT * FROM amenities WHERE place_id = place.id
+end
+BusinessLogic-->>API: Return list of place objects with reviews and amenities
+API-->>User: 200 OK
 ```
 
 ## API ( Usage & Description )

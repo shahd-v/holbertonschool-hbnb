@@ -14,7 +14,7 @@
 - [API](#api)
 - [Authors](#authors)
 
-## Requierment
+## Requirement
 
 ## Environment
 

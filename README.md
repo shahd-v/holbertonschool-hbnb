@@ -33,6 +33,7 @@
 ### Sequence diagram
 
 #### User Registration
+#####As a new visitor, I want to register an account with my personal details, so that I can access the platform's features as an authenticated user.
 ```mermaid
 sequenceDiagram
 participant User

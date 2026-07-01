@@ -31,9 +31,7 @@ This project is an elevated vertion of Airbnb where the user is allowed to:
 
 ![Package Diagram](part1/Package_Diagram.drawio.png)
 
-### Class diagram
 
-![Class Diagram](part1/Class_Diagram.drawio.png)
 
 ##### the Facade parrern explained
 Communication between the Presentation layer and Business Logic layer is handled through a **facade pattern**, meaning the API only interacts with a single unified interface rather than calling business logic classes directly. This reduces coupling and makes the system easier to maintain and extend.
@@ -42,6 +40,24 @@ This diagram illustrates the three-layer architecture of the HBnB application:
 - **Presentation Layer**
 - **Business Logic Layer**
 - **Persistence Layer**
+
+
+### Class diagram
+
+![Class Diagram](part1/Class_Diagram.drawio.png)
+
+This diagram details the core entities within the Business Logic layer:
+- **User**: Represents a registered account, storing personal details and authentication credentials.
+- **Place**: Represents a property listing, including price, location, and description.
+- **Review**: Represents user feedback on a place, including rating and comment.
+- **Amenity**: Represents features associated with a place .
+
+Key relationships:
+- A **User** can own multiple **Places** (one-to-many).
+- A **Place** can have multiple **Reviews** (one-to-many).
+- A **Place** can have multiple **Amenities** (many-to-many).
+
+Each entity includes a UUID for unique identification, along with `created_at` and `updated_at` timestamps to track record history.
 ---
 ### Sequence diagram
 

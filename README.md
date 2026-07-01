@@ -70,7 +70,7 @@ API-->>User: 201 Created
 
 #### Review Submission
 
-User Story:
+##### User Story:
 As a user who has visited a place, I want to submit a rating and comment, so that I can share my experience and help other users make informed decisions.
 
 ```mermaid
@@ -91,7 +91,7 @@ API-->>User: 201 Created
 
 #### Fetching a List of Places
 
-User Story:
+##### User Story:
 As a user searching for accommodations, I want to filter places by price, so that I can quickly compare options and make a decision.
 
 ```mermaid

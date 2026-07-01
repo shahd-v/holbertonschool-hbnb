@@ -28,7 +28,7 @@
 
 ### Class diagram
 
-![Class Diagram](part1/Class_Diagram.png)
+![Class Diagram](part1/Class_Diagram.drawio.png)
 ---
 ### Sequence diagram
 

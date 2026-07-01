@@ -33,7 +33,8 @@
 ### Sequence diagram
 
 #### User Registration
-User story: As a new User, I want to register an account with my personal details, so that I can access the platform's features as an authenticated user.
+User story: 
+As a new User, I want to register an account with my personal details, so that I can access the platform's features as an authenticated user.
 ```mermaid
 sequenceDiagram
 participant User
@@ -50,7 +51,8 @@ API-->>User: 201 Created
 ```
 
 #### Place Creation
-User story: As a registered host, I want to list a new place with details like title, description, price, and location, so that other users can discover and book it.
+User story:
+As a registered host, I want to list a new place with details like title, description, price, and location, so that other users can discover and book it.
 ```mermaid
 sequenceDiagram
 participant User
@@ -67,6 +69,10 @@ API-->>User: 201 Created
 ```
 
 #### Review Submission
+
+User Story:
+As a user who has visited a place, I want to submit a rating and comment, so that I can share my experience and help other users make informed decisions.
+
 ```mermaid
 sequenceDiagram
 participant User

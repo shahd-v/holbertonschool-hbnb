@@ -34,6 +34,11 @@ This project is an elevated vertion of Airbnb where the user is allowed to:
 ### Class diagram
 
 ![Class Diagram](part1/Class_Diagram.drawio.png)
+
+This diagram illustrates the three-layer architecture of the HBnB application:
+- **Presentation Layer**
+- **Business Logic Layer**
+- **Persistence Layer**
 ---
 ### Sequence diagram
 

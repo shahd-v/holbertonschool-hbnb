@@ -1,5 +1,6 @@
 
 # HBNB Project
+This project is an elevated vertion of Airbnb where the user is allowed to:
 
 
 ## About 

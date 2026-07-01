@@ -43,9 +43,9 @@ participant Database
 User->>API: API Call (post)
 API->>BusinessLogic: register ()
 BusinessLogic->>Database: INSERT INTO users (UUID, first_name, last_name, email, password, created_at, updated_at)
-Database-->>BusinessLogic: Confirm Save
-BusinessLogic-->>API: Return Response
-API-->>User: Return Success/Failure
+Database-->>BusinessLogic: Return new user ID and confirmation
+BusinessLogic-->>API: Return user object (without password)
+API-->>User: 201 Created
 ```
 
 #### Place Creation

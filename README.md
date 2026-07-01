@@ -97,7 +97,7 @@ BusinessLogic-->>API: Return Response
 API-->>User: Return Success/Failure
 ```
 
-## API ( Usage & Discription )
+## API ( Usage & Description )
 
 ## Authors
 - Mayasem Muneer

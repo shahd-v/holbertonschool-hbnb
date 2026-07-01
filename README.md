@@ -90,6 +90,10 @@ API-->>User: 201 Created
 
 
 #### Fetching a List of Places
+
+User Story:
+As a user searching for accommodations, I want to filter places by price range and see their reviews and amenities, so that I can quickly compare options and make a decision.
+
 ```mermaid
 sequenceDiagram
 participant User

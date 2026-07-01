@@ -24,7 +24,7 @@
 
 ### High level Package diagram
 
-![Package Diagram](Package_Diagram.drawio.png)
+![Package Diagram](Package%20Diagram.drawio.png)
 
 ### Class diagram
 

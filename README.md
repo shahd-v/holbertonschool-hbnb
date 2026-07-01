@@ -50,6 +50,7 @@ API-->>User: 201 Created
 ```
 
 #### Place Creation
+User story: As a registered host, I want to list a new place with details like title, description, price, and location, so that other users can discover and book it.
 ```mermaid
 sequenceDiagram
 participant User

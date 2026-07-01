@@ -16,6 +16,10 @@ This project is an elevated vertion of Airbnb where the user is allowed to:
 - [Authors](#authors)
 
 ## Requirement
+- Python 3.x
+- Flask (or your chosen framework)
+- SQLAlchemy (ORM for database interaction)
+- draw.io / Mermaid (for diagram generation)
 
 ## Environment
 

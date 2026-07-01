@@ -57,7 +57,7 @@ Key relationships:
 - A **Place** can have multiple **Reviews** (one-to-many).
 - A **Place** can have multiple **Amenities** (many-to-many).
 
-Each entity includes a UUID for unique identification, along with `created_at` and `updated_at` timestamps to track record history.
+###### Each entity includes a UUID for unique identification, along with `created_at` and `updated_at` timestamps to track record history.
 ---
 ### Sequence diagram
 

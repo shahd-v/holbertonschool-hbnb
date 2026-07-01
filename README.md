@@ -24,11 +24,11 @@
 
 ### High level Package diagram
 
-![Package Diagram](Package%20Diagram.drawio.png)
+![Package Diagram](part1/Package%20Diagram.drawio.png)
 
 ### Class diagram
 
-![Class Diagram](Class%20Diagram.png)
+![Class Diagram](part1/Class_Diagram.png)
 ---
 ### Sequence diagram
 

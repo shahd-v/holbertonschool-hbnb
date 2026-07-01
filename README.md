@@ -59,9 +59,9 @@ participant Database
 User->>API: API Call (post)
 API->>BusinessLogic: create ()
 BusinessLogic->>Database: INSERT INTO places (UUID, title, description, price, latitude, longitude, created_at, updated_at)
-Database-->>BusinessLogic: Confirm Save
-BusinessLogic-->>API: Return Response
-API-->>User: Return Success/Failure
+Database-->>BusinessLogic: Return place_id
+BusinessLogic-->>API: Return created place object
+API-->>User: 201 Created
 ```
 
 #### Review Submission

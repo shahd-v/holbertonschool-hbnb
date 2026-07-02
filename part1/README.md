@@ -1,8 +1,10 @@
 # UML documentation for the HBnB Evolution
 
 ## Introduction
-The HBnB project is a smaller clone of Airbnb.
-This document is a detailed blueprint for the HBnB project. In this document we list the phases the system architecture and design. This document includes the Package diagram, class diagram and, sequence diagrams.
+This document is a technical blueprint for the HBnB project, a smaller version of Airbnb.
+In this document we list the phases the system architecture and design. This document includes the Package diagram, class diagram and sequence diagrams.
+
+---
 
 ## Diagram structure
 

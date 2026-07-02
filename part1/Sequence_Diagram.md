@@ -1,0 +1,68 @@
+#### User Registration
+```mermaid
+sequenceDiagram
+participant User
+participant API
+participant BusinessLogic
+participant Database
+
+User->>API: API Call (post)
+API->>BusinessLogic: register ()
+BusinessLogic->>Database: INSERT INTO users (UUID, first_name, last_name, email, password, created_at, updated_at)
+Database-->>BusinessLogic: Return new user ID and confirmation
+BusinessLogic-->>API: Return user object (without password)
+API-->>User: 201 Created
+```
+
+#### Place Creation
+```mermaid
+sequenceDiagram
+participant User
+participant API
+participant BusinessLogic
+participant Database
+
+User->>API: API Call (post)
+API->>BusinessLogic: create ()
+BusinessLogic->>Database: INSERT INTO places (UUID, title, description, price, latitude, longitude, created_at, updated_at)
+Database-->>BusinessLogic: Return place_id
+BusinessLogic-->>API: Return created place object
+API-->>User: 201 Created
+```
+
+#### Review Submission
+```mermaid
+sequenceDiagram
+participant User
+participant API
+participant BusinessLogic
+participant Database
+
+User->>API: API Call (post)
+API->>BusinessLogic: create ()
+BusinessLogic->>Database: INSERT INTO reviews (UUID, rating, comment, created_at, updated_at)
+Database-->>BusinessLogic: Return review_id
+BusinessLogic-->>API: Return created review object
+API-->>User: 201 Created
+```
+
+
+#### Fetching a List of Places
+```mermaid
+sequenceDiagram
+participant User
+participant API
+participant BusinessLogic
+participant Database
+
+User->>API: API Call (GET)
+API->>BusinessLogic: list ()
+BusinessLogic->>Database: SELECT * FROM places WHERE price BETWEEN 2000 AND 5000
+Database-->>BusinessLogic: Return matching places
+loop
+BusinessLogic->>Database: SELECT * FROM reviews WHERE place_id = place.id
+BusinessLogic->>Database: SELECT * FROM amenities WHERE place_id = place.id
+end
+BusinessLogic-->>API: Return list of place objects with reviews and amenities
+API-->>User: 200 OK
+```

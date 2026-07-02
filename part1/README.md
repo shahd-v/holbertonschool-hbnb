@@ -14,16 +14,15 @@ In this document we list the phases the system architecture and design. This doc
 
 
 
-##### the Facade pattern explained
+##### The Facade pattern explained
 Communication between the Presentation layer and Business Logic layer is handled through a **facade pattern**, meaning the API only interacts with a single unified interface rather than calling business logic classes directly. This reduces coupling and makes the system easier to maintain and extend.
 
 This diagram illustrates the three-layer architecture of the HBnB application:
 - **Presentation Layer**
 - **Business Logic Layer**
 - **Persistence Layer**
-
-
-### Class diagram
+---
+### Class Diagram
 
 ![Class Diagram](Class_Diagram.drawio.png)
 
@@ -38,7 +37,8 @@ Key relationships:
 - A **Place** can have multiple **Reviews** (one-to-many).
 - A **Place** can have multiple **Amenities** (many-to-many).
 
-###### Each entity includes a UUID for unique identification, along with `created_at` and `updated_at` timestamps to track record history.
+Each entity includes a UUID for unique identification, along with `created_at` and `updated_at` timestamps to track record history.
+
 ---
 ### Sequence diagram
 
@@ -123,8 +123,7 @@ BusinessLogic-->>API: Return list of place objects with reviews and amenities
 API-->>User: 200 OK
 ```
 
-## API ( Usage & Description )
-
+---
 ## Authors
 - Mayasem Muneer
 - Abdulwahab Almatrudi

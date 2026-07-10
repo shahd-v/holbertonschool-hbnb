@@ -14,5 +14,8 @@ class User(BaseModel):
         return self
     
     def update_profile(self, data):
+        self.update(data)
     
     def delete(self):
+        if self in User.users:
+            User.users.remove(self)

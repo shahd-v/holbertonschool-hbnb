@@ -26,8 +26,8 @@ class BaseModel:
                 setattr(self, key, value)
         self.save()
 
-    def delete(self):
-        """Remove this object from its class store."""
-        store = type(self)._store()
-        if self in store:
-            store.remove(self)
+    # def delete(self):
+    #     """Remove this object from its class store."""
+    #     store = type(self)._store()
+    #     if self in store:
+    #         store.remove(self)

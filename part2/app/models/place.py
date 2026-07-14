@@ -10,8 +10,8 @@ class Place(BaseModel):
         self.latitude = latitude
         self.longitude = longitude
         self.owner = owner
-        self.reviews = []  # List to store related reviews
-        self.amenities = []  # List to store related amenities
+        self.reviews = []      # List to store related reviews
+        self.amenities = []    # List to store related amenities
 
     def add_review(self, review):
         """Add a review to the place."""
@@ -20,3 +20,12 @@ class Place(BaseModel):
     def add_amenity(self, amenity):
         """Add an amenity to the place."""
         self.amenities.append(amenity)
+
+    def create(self):
+        type(self)._store().append(self)
+        return self
+
+    @classmethod
+    def list(cls):
+        return cls._store()
+

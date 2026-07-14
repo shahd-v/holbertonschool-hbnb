@@ -6,3 +6,11 @@ class Amenity(BaseModel):
         super().__init__()
         self.name = name
         self.description = description
+
+    def create(self):
+        type(self)._store().append(self)
+        return self
+
+    @classmethod
+    def list(cls):
+        return cls._store()

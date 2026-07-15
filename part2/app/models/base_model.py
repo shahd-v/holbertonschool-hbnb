@@ -19,7 +19,7 @@ class BaseModel:
         """Update the updated_at timestamp whenever the object is modified."""
         self.updated_at = datetime.now()
 
-    def update(self, data):
+    def update(self, data: dict):
         """Update attributes from a dictionary, then refresh updated_at."""
         for key, value in data.items():
             if hasattr(self, key):

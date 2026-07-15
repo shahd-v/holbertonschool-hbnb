@@ -1,6 +1,7 @@
 from app.models.amenity import Amenity
 from app.models.user import User
 from app.models.review import Review
+from app.models.place import Place
 from app.persistence.repository import InMemoryRepository
 
 class HBnBFacade:
@@ -53,10 +54,34 @@ class HBnBFacade:
         return amenity
 
     # ---------------- Place ----------------
-    # Placeholder method for fetching a place by ID
+    def create_place(self, place_data):
+        price = place_data.get('price')
+        latitude = place_data.get('latitude')
+        longitude = place_data.get('longitude')
+
+        if price is None or price < 0:
+            raise ValueError("Invalid price")
+        if latitude is None or latitude < -90 or latitude > 90:
+            raise ValueError("Invalid latitude")
+        if longitude is None or longitude < -180 or longitude > 180:
+            raise ValueError("Invalid price")
+
+        place = Place(**place_data)
+        self.place_repo.add(place)
+        return place
+
     def get_place(self, place_id):
-        # Logic will be implemented in later tasks
-        pass
+        return self.place_repo.get(place_id)
+
+    def get_all_places(self):
+        return self.place_repo.get_all()
+
+    def update_place(self, place_id, place_data):
+        place = self.place_repo.get(place_id)
+        if not place:
+            return None
+        place.update(place_data)
+        return place
 
     # ---------------- Review ----------------
     def create_review(self, review_data):
@@ -83,7 +108,7 @@ class HBnBFacade:
         # Placeholder for logic to delete a review
         pass
 
-    
+
     # ...existing code...s
 
     # def get_reviews_by_place(self, place_id):

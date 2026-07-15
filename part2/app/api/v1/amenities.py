@@ -18,7 +18,7 @@ class AmenityList(Resource):
         """Register a new amenity"""
         amenity_data = api.payload
 
-        existing_amenity = facade.get_amenity(amenity_data['amenity_id'])
+        existing_amenity = facade.get_amenity(amenity_data['name'])
         if existing_amenity:
             return {'error': 'Invalid input data'}, 400
 

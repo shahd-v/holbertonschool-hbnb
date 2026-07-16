@@ -22,15 +22,14 @@ class AdminTestEndpoint(unittest.TestCase):
             'last_name': 'Doe',
             'email': 'john.doe@example.com'
         }
-
-        # response = self.client.post('/api/v1/admin/', json=new_admin)
-        # self.assertEqual(response.status_code, 201)
-        # data = response.get_json()
-        # self.assertIsInstance(data, dict)
-        # self.assertIn('id', data)
-        # self.assertEqual(data['first_name'], new_admin['first_name'])
-        # self.assertEqual(data['last_name'], new_admin['last_name'])
-        # self.assertEqual(data['email'], new_admin['email'])
+        response = self.client.post('/api/v1/admin/', json=new_admin)
+        self.assertEqual(response.status_code, 201)
+        data = response.get_json()
+        self.assertIsInstance(data, dict)
+        self.assertIn('id', data)
+        self.assertEqual(data['first_name'], new_admin['first_name'])
+        self.assertEqual(data['last_name'], new_admin['last_name'])
+        self.assertEqual(data['email'], new_admin['email'])
 
     def test_create_admin_invalid_data(self):
         invalid_admin = {

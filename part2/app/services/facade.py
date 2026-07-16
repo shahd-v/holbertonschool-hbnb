@@ -1,4 +1,5 @@
 from app.models.user import User
+from app.models.owner import Owner
 from app.models.place import Place
 from app.models.review import Review
 from app.models.amenity import Amenity
@@ -7,6 +8,7 @@ from app.persistence.repository import InMemoryRepository
 class HBnBFacade:
     def __init__(self):
         self.user_repo = InMemoryRepository()
+        self.owner_repo = InMemoryRepository()
         self.place_repo = InMemoryRepository()
         self.review_repo = InMemoryRepository()
         self.amenity_repo = InMemoryRepository()
@@ -32,6 +34,30 @@ class HBnBFacade:
             return None
         user.update(user_data)
         return user
+
+
+
+    # ---------------- Owner ----------------
+    def create_owner(self, owner_data):
+        owner = Owner(**owner_data)
+        self.owner_repo.add(owner)
+        return owner
+
+    def get_owner(self, owner_id):
+        return self.owner_repo.get(owner_id)
+
+    def get_owner_by_email(self, email):
+        return self.owner_repo.get_by_attribute('email', email)
+
+    def get_all_owners(self):
+        return self.owner_repo.get_all()
+
+    def update_owner(self, owner_id, owner_data):
+        owner = self.owner_repo.get(owner_id)
+        if not owner:
+            return None
+        owner.update(owner_data)
+        return owner
 
 
     # ---------------- Amenity ----------------

@@ -15,4 +15,4 @@ class Review(BaseModel):
 
     @classmethod
     def list_by_place(cls, place):
-        return [r for r in cls._store() if r.place == place]
+        return [rev for rev in cls._store() if rev.place == place]

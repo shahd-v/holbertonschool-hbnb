@@ -7,8 +7,11 @@ class Owner(User):
         self.places = []
 
     def add_place(self, place):
-        place.owner = self
-        self.places.append(place)
+        if not place:
+            raise ValueError('Invalid input data')
+        if place not in self.places:
+            place.owner = self
+            self.places.append(place)
 
     def list_places(self):
-        return self.places
+        return self.places.copy()

@@ -40,11 +40,11 @@ class UserList(Resource):
         users = facade.get_all_users()
         return [
             {
-                'id': u.id,
-                'first_name': u.first_name,
-                'last_name': u.last_name,
-                'email': u.email
-            } for u in users
+                'id': user.id,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'email': user.email
+            } for user in users
         ], 200
 
 

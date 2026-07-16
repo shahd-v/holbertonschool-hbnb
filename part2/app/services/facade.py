@@ -1,7 +1,7 @@
-from app.models.amenity import Amenity
 from app.models.user import User
-from app.models.review import Review
 from app.models.place import Place
+from app.models.review import Review
+from app.models.amenity import Amenity
 from app.persistence.repository import InMemoryRepository
 
 class HBnBFacade:
@@ -64,7 +64,7 @@ class HBnBFacade:
         if latitude is None or latitude < -90 or latitude > 90:
             raise ValueError("Invalid latitude")
         if longitude is None or longitude < -180 or longitude > 180:
-            raise ValueError("Invalid price")
+            raise ValueError("Invalid longitude")
 
         place = Place(**place_data)
         self.place_repo.add(place)
@@ -85,40 +85,43 @@ class HBnBFacade:
 
     # ---------------- Review ----------------
     def create_review(self, review_data):
-        # Placeholder for logic to create a review, including validation for user_id, place_id, and rating
-        pass
+        user = self.get_user(review_data['user_id'])
+        place = self.get_place(review_data['place_id'])
+        if not user or not place:
+            return None                       # invalid user_id or place_id
+        review = Review(
+            review_data['rating'],
+            review_data['comment'],
+            place,
+            user
+        )
+        self.review_repo.add(review)
+        place.add_review(review)              # link it to the place
+        return review
 
     def get_review(self, review_id):
-        # Placeholder for logic to retrieve a review by ID
-        pass
+        return self.review_repo.get(review_id)
 
     def get_all_reviews(self):
-        # Placeholder for logic to retrieve all reviews
-        pass
+        return self.review_repo.get_all()
 
     def get_reviews_by_place(self, place_id):
-        # Placeholder for logic to retrieve all reviews for a specific place
-        pass
+        place = self.get_place(place_id)
+        if not place:
+            return None
+        return [rev for rev in self.review_repo.get_all()
+            if rev.place.id == place_id]
 
     def update_review(self, review_id, review_data):
-        # Placeholder for logic to update a review
-        pass
+        review = self.review_repo.get(review_id)
+        if not review:
+            return None
+        review.update(review_data)
+        return review
 
     def delete_review(self, review_id):
-        # Placeholder for logic to delete a review
-        pass
-
-
-    # ...existing code...s
-
-    # def get_reviews_by_place(self, place_id):
-    # # Placeholder for logic to retrieve all reviews for a specific place
-    # pass
-
-    # def update_review(self, review_id, review_data):
-    # # Placeholder for logic to update a review
-    # pass
-
-    # def delete_review(self, review_id):
-    # # Placeholder for logic to delete a review
-    # pass
+        review = self.review_repo.get(review_id)
+        if not review:
+            return None
+        self.review_repo.delete(review_id)
+        return review

@@ -41,6 +41,28 @@ class HBnBFacade:
         """Delete a user."""
 
 
+    # ---------------- Admin ----------------
+    def create_admin(self, admin_data):
+        admin = Admin(**admin_data)
+        self.admin_repo.add(admin)
+        return admin
+
+    def get_admin(self, admin_id):
+        return self.admin_repo.get(admin_id)
+
+    def get_admin_by_email(self, email):
+        return self.admin_repo.get_by_attribute('email', email)
+
+    def get_all_admins(self):
+        return self.admin_repo.get_all()
+
+    def update_admin(self, admin_id, admin_data):
+        admin = self.admin_repo.get(admin_id)
+        if not admin:
+            return None
+        admin.update(admin_data)
+        return admin
+
     # ---------------- Owner ----------------
     def create_owner(self, owner_data):
         owner = Owner(**owner_data)

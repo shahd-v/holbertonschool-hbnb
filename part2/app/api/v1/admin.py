@@ -3,7 +3,11 @@ from app.services import facade
 
 api = Namespace('admin', description='Admin operations')
 
+<<<<<<< HEAD
 # Input model for creating a admin (validation + Swagger docs)
+=======
+# Input model for creating an admin (validation + Swagger docs)
+>>>>>>> temp-rescue-branch
 admin_model = api.model('Admin', {
     'first_name': fields.String(required=True, description='First name of the admin'),
     'last_name': fields.String(required=True, description='Last name of the admin'),
@@ -13,7 +17,11 @@ admin_model = api.model('Admin', {
 
 
 @api.route('/')
+<<<<<<< HEAD
 class Admin(Resource):
+=======
+class AdminList(Resource):
+>>>>>>> temp-rescue-branch
     @api.expect(admin_model, validate=True)
     @api.response(201, 'Admin successfully created')
     @api.response(400, 'Email already registered')
@@ -69,7 +77,11 @@ class AdminResource(Resource):
     @api.response(404, 'Admin not found')
     @api.response(400, 'Invalid input data')
     def put(self, admin_id):
+<<<<<<< HEAD
         """Update a admin's information"""
+=======
+        """Update an admin's information"""
+>>>>>>> temp-rescue-branch
         admin_data = api.payload
         admin = facade.get_admin(admin_id)
         if not admin:

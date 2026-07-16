@@ -1,7 +1,7 @@
 import unittest 
 from app import create_app
 
-class AmenityTestCase(unittest.TestCase):
+class AmenityTestEndpoint(unittest.TestCase):
     def setUp(self):
         """Set up the test client and any necessary test data."""
         self.app = create_app()
@@ -28,7 +28,7 @@ class AmenityTestCase(unittest.TestCase):
     def test_create_amenity_invalid_data(self):
         """Test creating an amenity with invalid data."""
         invalid_amenity = {
-            'name': ''  # Name is required and cannot be empty
+            'name': ''  
         }
         response = self.client.post('/api/v1/amenities/', json=invalid_amenity)
         self.assertEqual(response.status_code, 400)

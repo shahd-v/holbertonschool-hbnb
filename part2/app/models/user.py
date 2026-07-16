@@ -1,4 +1,5 @@
 from app.models.base_model import BaseModel
+from app.utils.validators import validate_email
 
 
 class User(BaseModel):
@@ -6,6 +7,8 @@ class User(BaseModel):
         super().__init__()
         self.first_name = first_name
         self.last_name = last_name
+        if not validate_email(email):
+            raise ValueError(f"Invalid email format: {email}")
         self.email = email
         self.password = password
 

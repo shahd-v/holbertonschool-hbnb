@@ -1,5 +1,6 @@
 from app.models.user import User
 from app.models.owner import Owner
+from app.models.admin import Admin
 from app.models.place import Place
 from app.models.review import Review
 from app.models.amenity import Amenity
@@ -9,6 +10,7 @@ class HBnBFacade:
     def __init__(self):
         self.user_repo = InMemoryRepository()
         self.owner_repo = InMemoryRepository()
+        self.admin_repo = InMemoryRepository()
         self.place_repo = InMemoryRepository()
         self.review_repo = InMemoryRepository()
         self.amenity_repo = InMemoryRepository()
@@ -35,6 +37,8 @@ class HBnBFacade:
         user.update(user_data)
         return user
 
+    def delete_user(self, user_id):
+        """Delete a user."""
 
 
     # ---------------- Owner ----------------
@@ -108,6 +112,10 @@ class HBnBFacade:
             return None
         place.update(place_data)
         return place
+
+    def delete_place(self, place_id):
+        """Delete a place."""
+        raise NotImplementedError
 
     # ---------------- Review ----------------
     def create_review(self, review_data):

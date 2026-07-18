@@ -48,6 +48,7 @@ class PlaceList(Resource):
             'price': new_place.price,
             'latitude': new_place.latitude,
             'longitude': new_place.longitude,
+            'amenities': new_place.amenities
         }, 201
 
     @api.response(200, 'List of places retrieved successfully')
@@ -61,7 +62,8 @@ class PlaceList(Resource):
                 'description': place.description,
                 'price': place.price,
                 'latitude': place.latitude,
-                'longitude': place.longitude
+                'longitude': place.longitude,
+                'amenities': place.amenities
             } for place in places
         ], 200
 
@@ -80,7 +82,8 @@ class PlaceResource(Resource):
             'description': place.description,
             'price': place.price,
             'latitude': place.latitude,
-            'longitude': place.longitude
+            'longitude': place.longitude,
+            'amenities': place.amenities
         }, 200
 
     @api.expect(place_model)
@@ -102,7 +105,8 @@ class PlaceResource(Resource):
             'description': updated.description,
             'price': updated.price,
             'latitude': updated.latitude,
-            'longitude': updated.longitude
+            'longitude': updated.longitude,
+            'amenities': updated.amenities
         }, 200
 
 @api.route('/<place_id>/reviews')

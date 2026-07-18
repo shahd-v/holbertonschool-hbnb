@@ -2,7 +2,7 @@ from app.models.base_model import BaseModel
 
 
 class Place(BaseModel):
-    def __init__(self, title, description, price, latitude, longitude, owner_id):
+    def __init__(self, title, description, price, latitude, longitude, owner_id, amenities):
         super().__init__()
         self.title = title
         self.description = description

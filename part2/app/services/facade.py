@@ -39,6 +39,7 @@ class HBnBFacade:
 
     def delete_user(self, user_id):
         """Delete a user."""
+        raise NotImplementedError
 
 
     # ---------------- Admin ----------------

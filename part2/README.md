@@ -45,8 +45,8 @@ part2/
 │   │   ├── __init__.py
 │   │   └── repository.py      # in-memory repository
 │   └── utils/
-│       └── validators.py      # shared validation helpers
-├── tests/                     # unit tests
+│       └── validators.py      # email validation helper
+├── tests/                     # unit tests (unittest)
 │   ├── test_users.py
 │   ├── test_owner.py
 │   ├── test_admin.py
@@ -88,7 +88,9 @@ This keeps the layers decoupled, so the in-memory storage can be swapped for a
 database in Part 3 without touching the endpoints.
 
 A single shared facade instance lives in `app/services/__init__.py`, so every
-endpoint operates on the same data.
+endpoint operates on the same data. The Facade holds one repository per entity:
+`user_repo`, `owner_repo`, `admin_repo`, `place_repo`, `review_repo`, and
+`amenity_repo`.
 
 ---
 
@@ -100,22 +102,24 @@ All entities inherit from **`BaseModel`**, which provides:
 - `created_at` / `updated_at` — audit timestamps
 - `save()` — refreshes `updated_at`
 - `update(data)` — updates attributes from a dictionary, then saves
+- `_store()` — per-class in-memory instance list
 
 | Entity | Attributes | Key methods |
 |--------|------------|-------------|
 | **User** | `first_name`, `last_name`, `email`, `password` | `register()`, `update_profile(data)` |
-| **Admin** (extends User) | inherited | `manage_users()`, `manage_places()`, `manage_amenities()` |
+| **Admin** (extends User) | inherited from User | Management methods that delegate to the Facade: `get_all_users()`, `get_user()`, `create_user()`, `update_user()` — and the equivalents for places, amenities, and reviews |
 | **Owner** (extends User) | `places` | `add_place(place)`, `list_places()` |
-| **Place** | `title`, `description`, `price`, `latitude`, `longitude`, `owner_id` | `create()`, `list()`, `add_amenity()`, `add_review()` |
+| **Place** | `title`, `description`, `price`, `latitude`, `longitude`, `owner_id`, `reviews`, `amenities` | `create()`, `list()`, `add_review(review)`, `add_amenity(amenity)` |
 | **Review** | `rating`, `comment`, `place`, `user` | `create()`, `list_by_place(place)` |
 | **Amenity** | `name`, `description` | `create()`, `list()` |
 
 ### Relationships
 
-- A **User/Owner** can own many **Places** (one-to-many).
-- A **Place** can have many **Reviews** (one-to-many).
+- A **User/Owner** can own many **Places** (one-to-many). A place stores its
+  `owner_id`.
+- A **Place** can have many **Reviews** (one-to-many), held in `place.reviews`.
 - A **Place** can have many **Amenities**, and an amenity can belong to many
-  places (many-to-many).
+  places (many-to-many), held in `place.amenities`.
 - A **Review** belongs to exactly one **Place** and one **User**.
 
 ---
@@ -180,24 +184,32 @@ Base URL: `http://127.0.0.1:5000/api/v1`
 | PUT | `/reviews/<review_id>` | Update a review | 200, 400, 404 |
 | DELETE | `/reviews/<review_id>` | Delete a review | 200, 404 |
 
-> **Note:** Reviews are the only entity that supports `DELETE` in Part 2.
-> All other entities support create, read, and update only.
+> **Note:** Reviews are the only entity that supports `DELETE` in Part 2. In the
+> Facade, `delete_user` and `delete_place` intentionally raise
+> `NotImplementedError`.
 
 ---
 
 ## Validation
 
-Input is validated at two levels:
+Validation happens at three levels:
 
-- **Request level** — flask-restx models (`@api.expect(model, validate=True)`)
-  reject requests with missing or malformed fields, returning `400`.
-- **Business level** — the Facade and models enforce the rules:
-  - `price` must be non-negative
-  - `latitude` must be between -90.0 and 90.0
-  - `longitude` must be between -180.0 and 180.0
-  - `rating` must be between 1 and 5
-  - `email` must match a valid format (`app/utils/validators.py`)
-  - emails must be unique when registering
+**Request level** — flask-restx models (`@api.expect(model, validate=True)`)
+reject requests with missing or malformed fields, returning `400`.
+
+**Model level** — `User` validates the email format using
+`app/utils/validators.py` and raises `ValueError` on an invalid address. Because
+`Owner` and `Admin` extend `User`, they inherit this check.
+
+**Facade level**
+- `create_place` validates that `price` is non-negative, `latitude` is between
+  -90 and 90, and `longitude` is between -180 and 180, raising `ValueError`
+  otherwise.
+- `create_review` verifies that the supplied `user_id` and `place_id` refer to
+  existing records before creating the review.
+
+**Endpoint level** — user, owner, and admin registration check that the email is
+not already in use and return `400` if it is.
 
 Passwords are accepted on input but **never returned** in any API response.
 
@@ -210,13 +222,6 @@ cd part2
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
-```
-
-Dependencies:
-
-```
-flask
-flask-restx
 ```
 
 ---
@@ -245,8 +250,8 @@ Every endpoint can be browsed and tried from that page.
 
 ### Unit tests
 
-The `tests/` directory contains `unittest` test suites for every endpoint. Each
-suite builds the app with `create_app()` and issues requests through Flask's
+The `tests/` directory contains `unittest` suites for the endpoints. Each suite
+builds the application with `create_app()` and issues requests through Flask's
 test client, covering both valid requests and invalid input.
 
 Run all tests:

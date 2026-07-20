@@ -1,6 +1,6 @@
 from flask_restx import Namespace, Resource, fields
 from app.services import facade
-from app.utils.validators import validate_email
+from app.utils.validators import validate_email, validate_empty_input
 
 api = Namespace('users', description='User operations')
 
@@ -30,6 +30,9 @@ class UserList(Resource):
         email = user_data.get('email')
         if not validate_email(email):
             return {'error': 'Invalid email format'}, 400
+        first_name = user_data.get('first_name')
+        if not validate_empty_input(first_name):
+            return {'error': 'Invaid input data'}, 400
 
         new_user = facade.create_user(user_data)
         return {

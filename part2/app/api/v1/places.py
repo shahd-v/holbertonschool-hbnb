@@ -1,5 +1,6 @@
 from flask_restx import Namespace, Resource, fields
 from app.services import facade
+from app.utils.validators import validate_price
 
 api = Namespace('places', description='Place operations')
 
@@ -38,6 +39,9 @@ class PlaceList(Resource):
 
         existing_place = facade.get_place(place_data['title'])
         if existing_place:
+            return {'error': 'Invalid input data'}, 400
+        price = place_data.get('price')
+        if not validate_price(price):
             return {'error': 'Invalid input data'}, 400
 
         new_place = facade.create_place(place_data)

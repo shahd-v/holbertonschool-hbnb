@@ -1,9 +1,11 @@
 from app.models.base_model import BaseModel
+from part2.app.utils.validators import validate_rating
 
 
 class Review(BaseModel):
     def __init__(self, rating, comment, place, user):
         super().__init__()
+        validate_rating(rating)
         self.rating = rating
         self.comment = comment
         self.place = place

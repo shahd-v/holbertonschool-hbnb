@@ -1,5 +1,6 @@
 from flask_restx import Namespace, Resource, fields
 from app.services import facade
+from app.models.review import validate_rating
 
 api = Namespace('reviews', description='Review operations')
 
@@ -20,7 +21,14 @@ class ReviewList(Resource):
     def post(self):
         """Register a new review"""
         review_data = api.payload
+
+        rating = review_data.get('rating')
+
+        if not validate_rating(rating):
+            return {'error': 'Invalid input data'}, 400
+        
         review = facade.create_review(review_data)
+
         if not review:
             return {'error': 'Invalid input data'}, 400
         return {

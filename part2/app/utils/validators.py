@@ -19,6 +19,10 @@ def validate_price(data):
         return False
     return True
 
+def validate_rating(data):
+    if data < 1 or data > 5:
+        return False
+    return True
 
 
 

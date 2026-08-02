@@ -1,6 +1,7 @@
 from flask_restx import Namespace, Resource, fields
 from app.services import facade
 from app.utils.validators import validate_price
+from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
 
 api = Namespace('places', description='Place operations')
 
@@ -24,16 +25,27 @@ place_model = api.model('Place', {
     'price': fields.Float(required=True, description='Price per night'),
     'latitude': fields.Float(required=True, description='Latitude of the place'),
     'longitude': fields.Float(required=True, description='Longitude of the place'),
-    'owner_id': fields.String(required=True, description='ID of the owner'),
     'amenities': fields.List(fields.String, required=True, description="List of amenities ID's")
 })
 
 @api.route('/')
 class PlaceList(Resource):
+    @jwt_required()
     @api.expect(place_model)
     @api.response(201, 'Place successfully created')
     @api.response(400, 'Invalid input data')
+    @api.response(403, 'Owner or admin privileges required')
     def post(self):
+
+        account_id = get_jwt_identity()
+        claims = get_jwt()
+
+        owner = facade.get_owner(account_id)
+        is_admin = claims.get('is_admin', False)
+
+        if not owner and not is_admin:
+            return {'error': 'Owner privileges required'}, 403
+
         """Register a new place"""
         place_data = api.payload
 

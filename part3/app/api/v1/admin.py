@@ -8,21 +8,28 @@ admin_model = api.model('Admin', {
     'first_name': fields.String(required=True, description='First name of the admin'),
     'last_name': fields.String(required=True, description='Last name of the admin'),
     'email': fields.String(required=True, description='Email of the admin'),
-    'password': fields.String(required=True, description='Password of the admin')
+    'password': fields.String(required=False, description='Password of the admin')
 })
 
 
 @api.route('/')
 class Admin(Resource):
-    @api.expect(admin_model, validate=True)
+    @api.expect(admin_model)
     @api.response(201, 'Admin successfully created')
     @api.response(400, 'Email already registered')
     @api.response(400, 'Invalid input data')
     def post(self):
         """Register a new admin"""
-        admin_data = api.payload
+        admin_data = api.payload or {}
 
-        existing_admin = facade.get_admin_by_email(admin_data['email'])
+        first_name = admin_data.get('first_name')
+        last_name = admin_data.get('last_name')
+        email = admin_data.get('email')
+
+        if not first_name or not last_name or not email:
+            return {'error': 'Invalid input data'}, 400
+
+        existing_admin = facade.get_admin_by_email(email)
         if existing_admin:
             return {'error': 'Email already registered'}, 400
 

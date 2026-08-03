@@ -8,21 +8,26 @@ def validate_email(email: str) -> bool:
         return False
     return re.match(email_regex, email) is not None
 
+
 def validate_empty_input(data):
-    # if not data:
-    #     return False
-    if len(data) < 1 or len(data) > 50:
+    if not isinstance(data, str):
         return False
-    return True
+    return 1 <= len(data) <= 50
+
+
 def validate_price(data):
-    if data < 1:
+    try:
+        return data is not None and float(data) >= 1
+    except (TypeError, ValueError):
         return False
-    return True
+
 
 def validate_rating(data):
-    if data < 1 or data > 5:
+    try:
+        numeric = int(data)
+    except (TypeError, ValueError):
         return False
-    return True
+    return 1 <= numeric <= 5
 
 
 

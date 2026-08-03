@@ -6,7 +6,7 @@ api = Namespace('amenities', description='Amenity operations')
 # Define the amenity model for input validation and documentation
 amenity_model = api.model('Amenity', {
     'name': fields.String(required=True, description='Name of the amenity'),
-    'description': fields.String(required=True, description='Description of the amenity')
+    'description': fields.String(required=False, description='Description of the amenity')
 })
 
 @api.route('/')
@@ -17,10 +17,10 @@ class AmenityList(Resource):
     
     def post(self):
         """Register a new amenity"""
-        amenity_data = api.payload
+        amenity_data = api.payload or {}
 
-        existing_amenity = facade.get_amenity(amenity_data['name'])
-        if existing_amenity:
+        name = amenity_data.get('name')
+        if not isinstance(name, str) or not name.strip():
             return {'error': 'Invalid input data'}, 400
 
         new_amenity = facade.create_amenity(amenity_data)

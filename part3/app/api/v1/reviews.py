@@ -8,25 +8,35 @@ api = Namespace('reviews', description='Review operations')
 review_model = api.model('Review', {
     'comment': fields.String(required=True, description='Text of the review'),
     'rating': fields.Integer(required=True, description='Rating of the place (1-5)'),
-    'user_id': fields.String(required=True, description='ID of the user'),
-    'place_id': fields.String(required=True, description='ID of the place')
+    'user_id': fields.Integer(required=True, description='ID of the user'),
+    'place_id': fields.Integer(required=False, description='ID of the place'),
+    'property_id': fields.Integer(required=False, description='Alias for the place ID')
 })
 
 
 @api.route('/')
 class ReviewList(Resource):
-    @api.expect(review_model, validate=True)
+    @api.expect(review_model)
     @api.response(201, 'Review successfully created')
     @api.response(400, 'Invalid input data')
     def post(self):
         """Register a new review"""
-        review_data = api.payload
+        review_data = api.payload or {}
 
         rating = review_data.get('rating')
+        user_id = review_data.get('user_id')
+        place_id = review_data.get('place_id') or review_data.get('property_id')
+        comment = review_data.get('comment')
 
         if not validate_rating(rating):
             return {'error': 'Invalid input data'}, 400
-        
+        if user_id is None or user_id == '':
+            return {'error': 'Invalid input data'}, 400
+        if place_id is None or place_id == '':
+            return {'error': 'Invalid input data'}, 400
+        if not isinstance(comment, str) or not comment.strip():
+            return {'error': 'Invalid input data'}, 400
+
         review = facade.create_review(review_data)
 
         if not review:
@@ -36,7 +46,7 @@ class ReviewList(Resource):
             'comment': review.comment,
             'rating': review.rating,
             'user_id': review.user.id,
-            'place_id': review.place.id
+            'property_id': review.place.id
         }, 201
 
     @api.response(200, 'List of reviews retrieved successfully')
@@ -66,7 +76,7 @@ class ReviewResource(Resource):
             'comment': review.comment,
             'rating': review.rating,
             'user_id': review.user.id,
-            'place_id': review.place.id
+            'property_id': review.place.id
         }, 200
 
     @api.expect(review_model)

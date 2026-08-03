@@ -1,4 +1,7 @@
-from flask_restx import Namespace, Resource, fields
+try:
+    from flask_restx import Namespace, Resource, fields
+except Exception:  # pragma: no cover - fallback for environments with flask-restplus
+    from flask_restplus import Namespace, Resource, fields
 from app.services import facade
 from app.utils.validators import validate_price
 

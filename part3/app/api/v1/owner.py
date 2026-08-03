@@ -8,21 +8,28 @@ owner_model = api.model('Owner', {
     'first_name': fields.String(required=True, description='First name of the owner'),
     'last_name': fields.String(required=True, description='Last name of the owner'),
     'email': fields.String(required=True, description='Email of the owner'),
-    'password': fields.String(required=True, description='Password of the owner')
+    'password': fields.String(required=False, description='Password of the owner')
 })
 
 
 @api.route('/')
 class Owner(Resource):
-    @api.expect(owner_model, validate=True)
+    @api.expect(owner_model)
     @api.response(201, 'Owner successfully created')
     @api.response(400, 'Email already registered')
     @api.response(400, 'Invalid input data')
     def post(self):
         """Register a new owner"""
-        owner_data = api.payload
+        owner_data = api.payload or {}
 
-        existing_owner = facade.get_owner_by_email(owner_data['email'])
+        first_name = owner_data.get('first_name')
+        last_name = owner_data.get('last_name')
+        email = owner_data.get('email')
+
+        if not first_name or not last_name or not email:
+            return {'error': 'Invalid input data'}, 400
+
+        existing_owner = facade.get_owner_by_email(email)
         if existing_owner:
             return {'error': 'Email already registered'}, 400
 

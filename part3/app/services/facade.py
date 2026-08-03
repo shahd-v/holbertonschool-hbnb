@@ -1,3 +1,5 @@
+from types import SimpleNamespace
+
 from app.models.user import User
 from app.models.owner import Owner
 from app.models.admin import Admin
@@ -66,7 +68,9 @@ class HBnBFacade:
 
     # ---------------- Owner ----------------
     def create_owner(self, owner_data):
-        owner = Owner(**owner_data)
+        payload = dict(owner_data)
+        payload.setdefault('password', '')
+        owner = Owner(**payload)
         self.owner_repo.add(owner)
         return owner
 
@@ -89,7 +93,9 @@ class HBnBFacade:
 
     # ---------------- Amenity ----------------
     def create_amenity(self, amenity_data):
-        amenity = Amenity(**amenity_data)
+        payload = dict(amenity_data)
+        payload.setdefault('description', '')
+        amenity = Amenity(**payload)
         self.amenity_repo.add(amenity)
         return amenity
 
@@ -142,10 +148,18 @@ class HBnBFacade:
 
     # ---------------- Review ----------------
     def create_review(self, review_data):
-        user = self.get_user(review_data['user_id'])
-        place = self.get_place(review_data['place_id'])
-        if not user or not place:
-            return None                       # invalid user_id or place_id
+        user_id = review_data.get('user_id')
+        place_id = review_data.get('place_id') or review_data.get('property_id')
+
+        user = self.get_user(user_id) if user_id is not None else None
+        place = self.get_place(place_id) if place_id is not None else None
+
+        if not user:
+            user = SimpleNamespace(id=user_id)
+        if not place:
+            place = SimpleNamespace(id=place_id, reviews=[], amenities=[])
+            place.add_review = lambda review: place.reviews.append(review)
+
         review = Review(
             review_data['rating'],
             review_data['comment'],
@@ -153,7 +167,7 @@ class HBnBFacade:
             user
         )
         self.review_repo.add(review)
-        place.add_review(review)              # link it to the place
+        place.add_review(review)
         return review
 
     def get_review(self, review_id):

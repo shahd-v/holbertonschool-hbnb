@@ -1,8 +1,5 @@
-import re
-
 from flask_restx import abort
 
-from app.models import review
 from app.models.admin import Admin
 from app.models.amenity import Amenity
 from app.models.owner import Owner
@@ -10,7 +7,6 @@ from app.models.place import Place
 from app.models.review import Review
 from app.models.user import User
 from app.persistence.repository import InMemoryRepository
-from app.utils.validators import validate_empty_input
 
 
 class HBnBFacade:
@@ -119,15 +115,15 @@ class HBnBFacade:
         return amenity
 
     def get_amenity(self, amenity_id):
-        return self.amenity_repo.get(amenity_id)
+        user = self.amenity_repo.get(amenity_id)
+        if not user:
+            abort(400, message='Amenity not found')
 
     def get_all_amenities(self):
         return self.amenity_repo.get_all()
 
     def update_amenity(self, amenity_id, amenity_data):
-        amenity = self.amenity_repo.get(amenity_id)
-        if not amenity:
-            return None
+        amenity = get_amenity(amenity_id)
         amenity.update(amenity_data)
         return amenity
 
@@ -171,13 +167,6 @@ class HBnBFacade:
 
     # ---------------- Review ----------------
     def create_review(self, review_data):
-        comment = review_data['comment']
-        try:
-            validate_empty_input(comment):
-            # abort(400, message='Invalid input data')
-        except ValueError as e:
-            abort(400, str(e))
-
         user = self.get_user(review_data['user_id'])
         place = self.get_place(review_data['place_id'])
         if not user or not place:

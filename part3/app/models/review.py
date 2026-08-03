@@ -25,11 +25,11 @@ class Review(BaseModel):
     def update_rev(self, data):
 
         try:
-            validate_rating(data['rating']):
+            validate_rating(data['rating'])
         except ValueError as e:
             abort(400, str(e))
         try:
-            validate_empty_input(data['comment']):
+            validate_empty_input(data['comment'])
         except ValueError as e:
             abort(400, str(e))
 

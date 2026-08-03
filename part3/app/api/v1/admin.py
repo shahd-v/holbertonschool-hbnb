@@ -1,4 +1,5 @@
 from flask_restx import Namespace, Resource, fields
+
 from app.services import facade
 
 api = Namespace('admin', description='Admin operations')
@@ -66,8 +67,8 @@ class AdminResource(Resource):
         admin_data = api.payload
         admin = facade.update_admin(admin_id, admin_data)
         return {
-            'id': updated.id,
-            'first_name': updated.first_name,
-            'last_name': updated.last_name,
-            'email': updated.email
+            'id': admin.id,
+            'first_name': admin.first_name,
+            'last_name': admin.last_name,
+            'email': admin.email
         }, 200

@@ -19,10 +19,10 @@ class User(BaseModel):
         self.last_name = last_name
 
         try:
-            validate_email(email):
+            validate_email(email)
+            self.email = email
         except ValueError as e:
             abort(400, str(e))
-        self.email = email
 
         self.password = password
 

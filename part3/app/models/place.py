@@ -20,7 +20,7 @@ class Place(BaseModel):
         except ValueError as e:
             abort(400, str(e))
         try:
-            validate_lat_and_long(latitude,longitude):
+            validate_lat_and_long(latitude,longitude)
         except ValueError as e:
             abort(400, str(e))
             # if latitude is None or latitude < -90 or latitude > 90:

@@ -1,6 +1,5 @@
 from flask_restx import Namespace, Resource, fields
 from app.services import facade
-from app.utils.validators import validate_email, validate_empty_input
 
 api = Namespace('users', description='User operations')
 
@@ -17,24 +16,22 @@ user_model = api.model('User', {
 class UserList(Resource):
     @api.expect(user_model, validate=True)
     @api.response(201, 'User successfully created')
-    @api.response(400, 'Email already registered')
-    @api.response(400, 'Invalid email format')
-    @api.response(400, 'Invalid input data')
+    @api.response(400, 'Email already registered,\
+                  Invalid email format, Invalid input data')
     def post(self):
         """Register a new user"""
         user_data = api.payload
 
-        existing_user = facade.get_user_by_email(user_data['email'])
-        if existing_user:
-            return {'error': 'Email already registered'}, 400
-        email = user_data.get('email')
-        if not validate_email(email):
-            return {'error': 'Invalid email format'}, 400
-        first_name = user_data.get('first_name')
-        if not validate_empty_input(first_name):
-            return {'error': 'Invaid input data'}, 400
+        # old implemntation now in model
+        # existing_user = facade.get_user_by_email(user_data['email'])
+        # if existing_user:
+        #     return {'error': 'Email already registered'}, 400
+        # email = user_data.get('email')
+        # if not validate_email(email):
+        #     return {'error': 'Invalid email format'}, 400
 
         new_user = facade.create_user(user_data)
+
         return {
             'id': new_user.id,
             'first_name': new_user.first_name,
@@ -63,8 +60,9 @@ class UserResource(Resource):
     def get(self, user_id):
         """Get user details by ID"""
         user = facade.get_user(user_id)
-        if not user:
-            return {'error': 'User not found'}, 404
+        # old implemntation now in facade
+        # if not user:
+        #     return {'error': 'User not found'}, 404
         return {
             'id': user.id,
             'first_name': user.first_name,
@@ -79,15 +77,21 @@ class UserResource(Resource):
     def put(self, user_id):
         """Update a user's information"""
         user_data = api.payload
-        user = facade.get_user(user_id)
-        if not user:
-            return {'error': 'User not found'}, 404
+        user = facade.update_user(user_id, user_data)
 
-        facade.update_user(user_id, user_data)
-        updated = facade.get_user(user_id)
+        # old implemntations now it's all in the model
+        # if not user:
+        #      return {'error': 'User not found'}, 404
+        # user = facade.get_user(user_id)
+        # if not user:
+        #     return {'error': 'User not found'}, 404
+        #
+        # facade.update_user(user_id, user_data)
+        # updated = facade.get_user(user_id)
+
         return {
-            'id': updated.id,
-            'first_name': updated.first_name,
-            'last_name': updated.last_name,
-            'email': updated.email
+            'id': user.id,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'email': user.email
         }, 200

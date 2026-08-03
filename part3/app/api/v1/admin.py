@@ -21,11 +21,6 @@ class Admin(Resource):
     def post(self):
         """Register a new admin"""
         admin_data = api.payload
-
-        existing_admin = facade.get_admin_by_email(admin_data['email'])
-        if existing_admin:
-            return {'error': 'Email already registered'}, 400
-
         new_admin = facade.create_admin(admin_data)
         return {
             'id': new_admin.id,
@@ -55,8 +50,6 @@ class AdminResource(Resource):
     def get(self, admin_id):
         """Get admin details by ID"""
         admin = facade.get_admin(admin_id)
-        if not admin:
-            return {'error': 'Admin not found'}, 404
         return {
             'id': admin.id,
             'first_name': admin.first_name,
@@ -71,12 +64,7 @@ class AdminResource(Resource):
     def put(self, admin_id):
         """Update an admin's information"""
         admin_data = api.payload
-        admin = facade.get_admin(admin_id)
-        if not admin:
-            return {'error': 'Admin not found'}, 404
-
-        facade.update_admin(admin_id, admin_data)
-        updated = facade.get_admin(admin_id)
+        admin = facade.update_admin(admin_id, admin_data)
         return {
             'id': updated.id,
             'first_name': updated.first_name,

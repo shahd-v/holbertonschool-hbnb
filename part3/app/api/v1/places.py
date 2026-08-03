@@ -1,6 +1,5 @@
 from flask_restx import Namespace, Resource, fields
 from app.services import facade
-from app.utils.validators import validate_price
 
 api = Namespace('places', description='Place operations')
 
@@ -37,12 +36,12 @@ class PlaceList(Resource):
         """Register a new place"""
         place_data = api.payload
 
-        existing_place = facade.get_place(place_data['title'])
-        if existing_place:
-            return {'error': 'Invalid input data'}, 400
-        price = place_data.get('price')
-        if not validate_price(price):
-            return {'error': 'Invalid input data'}, 400
+        # existing_place = facade.get_place(place_data['title'])
+        # if existing_place:
+        #     return {'error': 'Invalid input data'}, 400
+        # price = place_data.get('price')
+        # if not validate_price(price):
+        #     return {'error': 'Invalid input data'}, 400
 
         new_place = facade.create_place(place_data)
         return {
@@ -78,8 +77,6 @@ class PlaceResource(Resource):
     def get(self, place_id):
         """Get place details by ID"""
         place = facade.get_place(place_id)
-        if not place:
-            return {'error': 'Place not found'}, 404
         return {
             'id': place.id,
             'title': place.title,
@@ -97,9 +94,6 @@ class PlaceResource(Resource):
     def put(self, place_id):
         """Update a place's information"""
         place_data = api.payload
-        place = facade.get_place(place_id)
-        if not place:
-            return {'error': 'Place not found'}, 404
 
         facade.update_place(place_id, place_data)
         updated = facade.get_place(place_id)
@@ -120,8 +114,6 @@ class PlaceReviewList(Resource):
     def get(self, place_id):
         """Get all reviews for a specific place"""
         reviews = facade.get_reviews_by_place(place_id)
-        if reviews is None:
-            return {'error': 'Place not found'}, 404
         return [
             {
                 'id': rev.id,

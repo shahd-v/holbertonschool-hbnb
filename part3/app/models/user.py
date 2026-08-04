@@ -1,7 +1,7 @@
-import bcrypt
-
+from flask_bcrypt import generate_password_hash, check_password_hash
 from app.models.base_model import BaseModel
 from app.utils.validators import validate_empty_input
+
 
 class User(BaseModel):
     is_admin = False
@@ -11,7 +11,7 @@ class User(BaseModel):
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
-        self.password = password
+        self.hash_password(password)
 
     def register(self):
         type(self)._store().append(self)
@@ -21,9 +21,9 @@ class User(BaseModel):
         self.update(data)
 
     def hash_password(self, password):
-    #Hashes the password before storing it.
-        self.password = bcrypt.generate_password_hash(password).decode('utf-8')
+        """Hash the password before storing it."""
+        self.password = generate_password_hash(password).decode('utf-8')
 
     def verify_password(self, password):
-    #Verifies if the provided password matches the hashed password.
-        return bcrypt.check_password_hash(self.password, password)
+        """Verify a password against the stored hash."""
+        return check_password_hash(self.password, password)

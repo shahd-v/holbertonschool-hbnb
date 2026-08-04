@@ -1,4 +1,5 @@
 from flask_restx import Namespace, Resource, fields
+
 from app.services import facade
 from app.utils.validators import validate_price
 from flask_jwt_extended import current_user, jwt_required, get_jwt_identity, get_jwt
@@ -92,8 +93,6 @@ class PlaceResource(Resource):
     def get(self, place_id):
         """Get place details by ID"""
         place = facade.get_place(place_id)
-        if not place:
-            return {'error': 'Place not found'}, 404
         return {
             'id': place.id,
             'title': place.title,
@@ -142,8 +141,6 @@ class PlaceReviewList(Resource):
     def get(self, place_id):
         """Get all reviews for a specific place"""
         reviews = facade.get_reviews_by_place(place_id)
-        if reviews is None:
-            return {'error': 'Place not found'}, 404
         return [
             {
                 'id': rev.id,

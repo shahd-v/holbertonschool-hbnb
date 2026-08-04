@@ -1,4 +1,5 @@
 from flask_restx import Namespace, Resource, fields
+
 from app.services import facade
 from app.models.review import validate_rating
 from flask_jwt_extended import jwt_required, get_jwt_identity
@@ -26,15 +27,14 @@ class ReviewList(Resource):
         review_data = api.payload
         review_data['user_id'] = current_user
 
-        rating = review_data.get('rating')
+        # rating = review_data.get('rating')
+        # if not validate_rating(rating):
+        #     return {'error': 'Invalid input data'}, 400
 
-        if not validate_rating(rating):
-            return {'error': 'Invalid input data'}, 400
-        
         review = facade.create_review(review_data)
+        # if not review:
+        #     return {'error': 'Invalid input data'}, 400
 
-        if not review:
-            return {'error': 'Invalid input data'}, 400
         return {
             'id': review.id,
             'comment': review.comment,
@@ -80,15 +80,11 @@ class ReviewResource(Resource):
     def put(self, review_id):
         """Update a review's information"""
         review_data = api.payload
-        review = facade.get_review(review_id)
-        if not review:
-            return {'error': 'Review not found'}, 404
-        facade.update_review(review_id, review_data)
-        updated = facade.get_review(review_id)
+        review = facade.update_review(review_id, review_data)
         return {
-            'id': updated.id,
-            'comment': updated.comment,
-            'rating': updated.rating
+            'id': review.id,
+            'comment': review.comment,
+            'rating': review.rating
         }, 200
 
     @api.response(200, 'Review deleted successfully')

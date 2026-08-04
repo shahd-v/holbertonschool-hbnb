@@ -5,7 +5,6 @@ from app.models.user import User
 class Admin(User):
     is_admin = True
     """Admin user with capabilities to manage users, places, amenities, and reviews."""
-
     # ---- User management ----
     def get_all_users(self):
         """Retrieve all users."""

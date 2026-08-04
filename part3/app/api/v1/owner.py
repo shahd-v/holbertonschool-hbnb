@@ -1,4 +1,5 @@
 from flask_restx import Namespace, Resource, fields
+
 from app.services import facade
 
 api = Namespace('owner', description='Owner operations')
@@ -21,10 +22,6 @@ class Owner(Resource):
     def post(self):
         """Register a new owner"""
         owner_data = api.payload
-
-        existing_owner = facade.get_owner_by_email(owner_data['email'])
-        if existing_owner:
-            return {'error': 'Email already registered'}, 400
 
         new_owner = facade.create_owner(owner_data)
         return {
@@ -55,8 +52,6 @@ class OwnerResource(Resource):
     def get(self, owner_id):
         """Get owner details by ID"""
         owner = facade.get_owner(owner_id)
-        if not owner:
-            return {'error': 'Owner not found'}, 404
         return {
             'id': owner.id,
             'first_name': owner.first_name,
@@ -71,15 +66,10 @@ class OwnerResource(Resource):
     def put(self, owner_id):
         """Update a owner's information"""
         owner_data = api.payload
-        owner = facade.get_owner(owner_id)
-        if not owner:
-            return {'error': 'Owner not found'}, 404
-
-        facade.update_owner(owner_id, owner_data)
-        updated = facade.get_owner(owner_id)
+        owner = facade.update_owner(owner_id, owner_data)
         return {
-            'id': updated.id,
-            'first_name': updated.first_name,
-            'last_name': updated.last_name,
-            'email': updated.email
+            'id': owner.id,
+            'first_name': owner.first_name,
+            'last_name': owner.last_name,
+            'email': owner.email
         }, 200

@@ -1,4 +1,5 @@
 from flask_restx import Namespace, Resource, fields
+
 from app.services import facade
 
 api = Namespace('amenities', description='Amenity operations')
@@ -14,14 +15,10 @@ class AmenityList(Resource):
     @api.expect(amenity_model)
     @api.response(201, 'Amenity successfully created')
     @api.response(400, 'Invalid input data')
-    
+
     def post(self):
         """Register a new amenity"""
         amenity_data = api.payload
-
-        existing_amenity = facade.get_amenity(amenity_data['name'])
-        if existing_amenity:
-            return {'error': 'Invalid input data'}, 400
 
         new_amenity = facade.create_amenity(amenity_data)
         return {

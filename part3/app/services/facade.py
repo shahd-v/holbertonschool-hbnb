@@ -1,3 +1,5 @@
+from turtle import title
+
 from app.models.user import User
 from app.models.owner import Owner
 from app.models.admin import Admin
@@ -125,6 +127,9 @@ class HBnBFacade:
 
     def get_place(self, place_id):
         return self.place_repo.get(place_id)
+    
+    def get_place_by_title(self, title):
+        return self.place_repo.get_by_attribute('title', title)
 
     def get_all_places(self):
         return self.place_repo.get_all()

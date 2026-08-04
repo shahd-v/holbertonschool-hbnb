@@ -1,6 +1,7 @@
 from flask_restx import Namespace, Resource, fields
 from app.services import facade
 from app.models.review import validate_rating
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
 api = Namespace('reviews', description='Review operations')
 
@@ -8,19 +9,22 @@ api = Namespace('reviews', description='Review operations')
 review_model = api.model('Review', {
     'comment': fields.String(required=True, description='Text of the review'),
     'rating': fields.Integer(required=True, description='Rating of the place (1-5)'),
-    'user_id': fields.String(required=True, description='ID of the user'),
     'place_id': fields.String(required=True, description='ID of the place')
 })
 
 
 @api.route('/')
 class ReviewList(Resource):
+    @jwt_required()
     @api.expect(review_model, validate=True)
     @api.response(201, 'Review successfully created')
     @api.response(400, 'Invalid input data')
     def post(self):
         """Register a new review"""
+        current_user = get_jwt_identity()
+        
         review_data = api.payload
+        review_data['user_id'] = current_user
 
         rating = review_data.get('rating')
 

@@ -1,4 +1,5 @@
 import re
+from flask_restx import abort
 
 
 def validate_email(email: str) -> bool:
@@ -10,6 +11,16 @@ def validate_email(email: str) -> bool:
         # return False
     # return re.match(email_regex, email) is not None
 
+def email_validator(f):
+    """Decorator for validate_email"""
+    def wrapper(self, key, value):
+        try:
+            validate_email(value)
+            return f(self, key, value)
+        except ValueError as e:
+            abort(400, str(e))
+    return wrapper
+
 def validate_empty_input(data):
     # if not data:
     #     return False
@@ -20,6 +31,16 @@ def validate_price(data):
     if data < 1:
         raise ValueError('Invalid price')
     return True
+
+def non_empty_validator(f):
+    """Decorator for validate_empty_input"""
+    def wrapper(self, key, value):
+        try:
+            validate_empty_input(value)
+            return f(self, key, value)
+        except ValueError as e:
+            abort(400, str(e))
+    return wrapper
 
 def validate_rating(data):
     if data < 1 or data > 5:

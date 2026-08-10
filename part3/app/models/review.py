@@ -1,38 +1,19 @@
-from flask import abort
+from sqlalchemy import ForeignKey, Integer
+from app.models.place import Place
+from app.models.user import User
 
+from app import db
 from app.models.base_model import BaseModel
-from app.utils.validators import validate_empty_input, validate_rating
 
 
 class Review(BaseModel):
-    def __init__(self, rating, comment, place, user):
-        super().__init__()
-        try:
-            validate_rating(rating)
-        except ValueError as e:
-            abort(400, str(e))
-        self.rating = rating
-
-        try:
-            validate_empty_input(comment)
-        except ValueError as e:
-            abort(400, str(e))
-        self.comment = comment
-
-        self.place = place
-        self.user = user
+    __tablename__ = 'review'
+    rating = db.Column(Integer, nullable=False)
+    comment = db.Column(db.String(1024), nullable=False)
+    place = db.Column(Integer, ForeignKey(Place.id), nullable=False)
+    user = db.Column(Integer, ForeignKey(User.id), nullable=False)
 
     def update_rev(self, data):
-
-        try:
-            validate_rating(data['rating'])
-        except ValueError as e:
-            abort(400, str(e))
-        try:
-            validate_empty_input(data['comment'])
-        except ValueError as e:
-            abort(400, str(e))
-
         self.update(data)
 
     def create(self):

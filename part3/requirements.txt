@@ -1,3 +1,7 @@
 flask
 flask-restx>=1.3.2
 flask-bcrypt
+flask-jwt-extended
+sqlalchemy
+flask-sqlalchemy
+werkzeug.exceptions

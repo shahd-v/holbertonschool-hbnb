@@ -1,9 +1,9 @@
-from app.services import facade
 from app.models.user import User
+from app.services import facade
 
 
 class Admin(User):
-    is_admin = True
+    __tablename__ = 'admin'
     """Admin user with capabilities to manage users, places, amenities, and reviews."""
     # ---- User management ----
     def get_all_users(self):

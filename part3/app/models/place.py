@@ -1,39 +1,35 @@
-from flask import abort
+from sqlalchemy import ForeignKey, Integer
+from sqlalchemy.orm import relationship
 
+from app import db
 from app.models.base_model import BaseModel
-from app.utils.validators import validate_price
+from app.models.owner import Owner
+
 
 class Place(BaseModel):
-    def __init__(self, title, description, price, latitude, longitude, owner_id):
-        super().__init__()
+    __tablename__ = 'places'
 
-        try:
-            validate_empty_input(first_name)
-            validate_empty_input(last_name)
-        except ValueError as e:
-            abort(400, str(e))
-        self.title = title
-        self.description = description
+    place_amenities = db.Table('place_amenities',
+                               db.Column('place_id', db.Integer, db.ForeignKey('places.id'),
+                                         primary_key=True),
+                               db.Column('amenity_id', db.Integer, db.ForeignKey('amenity.id'),
+                                         primary_key=True)
+                                            )
 
-        try:
-            validate_price(price)
-        except ValueError as e:
-            abort(400, str(e))
-        try:
-            validate_lat_and_long(latitude,longitude)
-        except ValueError as e:
-            abort(400, str(e))
-            # if latitude is None or latitude < -90 or latitude > 90:
-            #     return False
-            # if longitude is None or longitude < -180 or longitude > 180:
-            #     return False
+    title = db.Column(db.String(50), nullable=False)
+    description = db.Column(db.String, nullable=False)
 
-        self.price = price
-        self.latitude = latitude
-        self.longitude = longitude
-        self.owner_id = owner_id
-        self.reviews = []      # List to store related reviews
-        self.amenities = []    # List to store related amenities
+        # if latitude is None or latitude < -90 or latitude > 90:
+        #     return False
+        # if longitude is None or longitude < -180 or longitude > 180:
+        #     return False
+
+    price = db.Column(db.Integer, nullable=False)
+    latitude = db.Column(db.Integer, nullable=False)
+    longitude = db.Column(db.Integer, nullable=False)
+    owner_id = db.Column(db.Integer, ForeignKey(Owner.id), nullable=False)
+    reviews = relationship('Review', backref='Places', lazy=True)
+    amenities = relationship('Amenity', secondary=place_amenities, backref='places', lazy=True)
 
 
     def add_review(self, review):

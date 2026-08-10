@@ -1,8 +1,9 @@
+from flask_jwt_extended import get_jwt, get_jwt_identity, jwt_required
 from flask_restx import Namespace, Resource, fields
+from werkzeug.exceptions import Unauthorized
 
+from app.models import place
 from app.services import facade
-from app.utils.validators import validate_price
-from flask_jwt_extended import current_user, jwt_required, get_jwt_identity, get_jwt
 
 api = Namespace('places', description='Place operations')
 
@@ -38,24 +39,22 @@ class PlaceList(Resource):
     @api.response(403, 'Owner or admin privileges required')
     def post(self):
 
+        current_user = get_jwt()
+        if (not current_user.get('is_admin') or
+                current_user.get('is_owner')):
+            raise Unauthorized('Owner or admin privileges required')
+
         account_id = get_jwt_identity()
-        claims = get_jwt()
-
-        owner = facade.get_owner(account_id)
-        is_admin = claims.get('is_admin', False)
-
-        if not owner and not is_admin:
-            return {'error': 'Owner privileges required'}, 403
 
         """Register a new place"""
         place_data = api.payload.copy()
         place_data['owner_id'] = account_id
 
+        from app.schemas.place_schema import PlaceCreateSchema
+        PlaceCreateSchema.validate(place_data)
+
         existing_place = facade.get_place_by_title(place_data['title'])
         if existing_place:
-            return {'error': 'Invalid input data'}, 400
-        price = place_data.get('price')
-        if not validate_price(price):
             return {'error': 'Invalid input data'}, 400
 
         new_place = facade.create_place(place_data)
@@ -111,28 +110,44 @@ class PlaceResource(Resource):
 
     def put(self, place_id):
         """Update a place's information"""
-        current_user = get_jwt_identity()
+        facade.get_place(place_id)
+
+        current_user = get_jwt()
+        if (not current_user.get('is_admin') or
+                current_user.get('is_owner')):
+            raise Unauthorized('Unauthorized action')
 
         place_data = api.payload
-        
-        place = facade.get_place(place_id)
-        if not place:
-            return {'error': 'Place not found'}, 404
-        
-        if place.owner_id != current_user:
-            return {'error': 'Unauthorized action'}, 403
-        
-        facade.update_place(place_id, place_data)
-        updated = facade.get_place(place_id)
-        return {
-            'id': updated.id,
-            'title': updated.title,
-            'description': updated.description,
-            'price': updated.price,
-            'latitude': updated.latitude,
-            'longitude': updated.longitude,
-            'amenities': updated.amenities
-        }, 200
+
+        try:
+            from app.schemas.place_schema import PlaceUpdateSchema
+            PlaceUpdateSchema.validate(place_data)
+
+            facade.update_place(place_id, place_data)
+            updated = facade.get_place(place_id)
+            return {
+                'id': updated.id,
+                'title': updated.title,
+                'description': updated.description,
+                'price': updated.price,
+                'latitude': updated.latitude,
+                'longitude': updated.longitude,
+                'amenities': updated.amenities
+            }, 200
+        except ValueError as e:
+            return {'message': str(e)}, 400
+
+    @api.response(200, 'Place deleted successfully')
+    @api.response(403, 'Unauthorized action')
+    @api.response(404, 'Place not found')
+    def delete(self, place_id):
+        """Delete a place"""
+        current_user = get_jwt()
+        if not current_user.get('is_admin'):
+            raise Unauthorized('Unauthorized action')
+        facade.get_place(place_id)
+        facade.delete_place(place_id)
+        return {'message': 'Place deleted successfully'}, 200
 
 @api.route('/<place_id>/reviews')
 class PlaceReviewList(Resource):

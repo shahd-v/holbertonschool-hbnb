@@ -1,18 +1,11 @@
-from flask_restx import abort
+from app import db
 from app.models.base_model import BaseModel
-from app.utils.validators import validate_empty_input
 
 
 class Amenity(BaseModel):
-    def __init__(self, name, description):
-        super().__init__()
-        try:
-            validate_empty_input(name)
-            validate_empty_input(description)
-        except ValueError as e:
-            abort(400, str(e))
-        self.name = name
-        self.description = description
+    __tablename__ = 'amenity'
+    name = db.Column(db.String(50), nullable=False)
+    description = db.Column(db.String(1024), nullable=False)
 
     def create(self):
         type(self)._store().append(self)

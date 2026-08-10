@@ -1,5 +1,6 @@
 # HBnB Evolution — Part 3: JWT and SQL
-```
+## Database Schema
+```mermaid
 erDiagram
     Users ||--o{ Review : "writes"
     Owner ||--o{ Place : "owns"

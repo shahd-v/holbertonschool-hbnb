@@ -1,4 +1,65 @@
-# HBnB Evolution — Part 2: Business Logic and API
+# HBnB Evolution — Part 3: JWT and SQL
+
+erDiagram
+    Users ||--o{ Review : "writes"
+    Owner ||--o{ Place : "owns"
+    Place ||--o{ Review : "receives"
+    Place ||--o{ Place_Amenity : "has"
+    Amenity ||--o{ Place_Amenity : "listed_in"
+    
+    '''
+    Users {
+        char id PK "CHAR(36) UUID"
+        varchar first_name "VARCHAR(255)"
+        varchar last_name "VARCHAR(255)"
+        varchar email UK "UNIQUE"
+        varchar password "VARCHAR(255)"
+    }
+
+    Admin {
+        char id PK "CHAR(36) UUID"
+        varchar first_name "VARCHAR(255)"
+        varchar last_name "VARCHAR(255)"
+        varchar email UK "UNIQUE"
+        varchar password "VARCHAR(255)"
+    }
+
+    Owner {
+        char id PK "CHAR(36) UUID"
+        varchar first_name "VARCHAR(255)"
+        varchar last_name "VARCHAR(255)"
+        varchar email UK "UNIQUE"
+        varchar password "VARCHAR(255)"
+    }
+
+    Place {
+        char id PK "CHAR(36) UUID"
+        varchar title "VARCHAR(255)"
+        text description "TEXT"
+        decimal price "DECIMAL(10,2)"
+        float latitude "FLOAT"
+        float longitude "FLOAT"
+        char owner_id FK "-> Owner(id)"
+    }
+
+    Review {
+        char id PK "CHAR(36) UUID"
+        text text "TEXT"
+        int rating "CHECK 1-5"
+        char user_id FK "-> Users(id)"
+        char place_id FK "-> Places(id) BROKEN"
+    }
+
+    Amenity {
+        char id PK "CHAR(36) UUID"
+        varchar name UK "UNIQUE"
+    }
+
+    Place_Amenity {
+        char Place_id PK "FK -> Place(id)"
+        char Amenity_id PK "FK -> Amenity(id)"
+    }
+    '''
 
 ## Introduction
 
@@ -16,7 +77,7 @@ are also deferred to Part 3.
 ## Project Structure
 
 ```
-part2/
+part3/
 ├── app/
 │   ├── __init__.py            # Flask app factory, registers API namespaces
 │   ├── api/                   # Presentation layer

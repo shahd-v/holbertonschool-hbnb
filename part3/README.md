@@ -1,5 +1,5 @@
 # HBnB Evolution — Part 3: JWT and SQL
-
+```
 erDiagram
     Users ||--o{ Review : "writes"
     Owner ||--o{ Place : "owns"
@@ -7,7 +7,6 @@ erDiagram
     Place ||--o{ Place_Amenity : "has"
     Amenity ||--o{ Place_Amenity : "listed_in"
     
-    '''
     Users {
         char id PK "CHAR(36) UUID"
         varchar first_name "VARCHAR(255)"
@@ -59,7 +58,7 @@ erDiagram
         char Place_id PK "FK -> Place(id)"
         char Amenity_id PK "FK -> Amenity(id)"
     }
-    '''
+```
 
 ## Introduction
 

@@ -215,13 +215,12 @@ class HBnBFacade:
         if not user or not place:
             raise ValueError('Invalid input data')
         review = Review(
-            review_data['rating'],
-            review_data['comment'],
-            place,
-            user
+            rating=review_data['rating'],
+            comment=review_data['comment'],
+            place_id=place.id,
+            user_id=user.id
         )
         self.review_repo.add(review)
-        place.add_review(review)              # link it to the place
         return review
 
     def get_review(self, review_id):

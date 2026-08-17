@@ -5,3 +5,4 @@ flask-jwt-extended
 sqlalchemy
 flask-sqlalchemy
 werkzeug.exceptions
+flask-cors==6.0.5

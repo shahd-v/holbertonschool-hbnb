@@ -3,9 +3,8 @@ from werkzeug.exceptions import NotFound
 from app.persistence.admin_repository import AdminRepository
 from app.persistence.amenity_repository import AmenityRepository
 from app.persistence.owner_repository import OwnerRepository
-from app.persistence.review_repository import ReviewRepository
 from app.persistence.place_repository import PlaceRepository
-from app.persistence.repository import SQLAlchemyRepository
+from app.persistence.review_repository import ReviewRepository
 from app.persistence.user_repository import UserRepository
 
 

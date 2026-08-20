@@ -31,7 +31,10 @@ class Login(Resource):
 
         # Step 2: Check the account exists AND the password is correct.
         #         One check covers all three types.
-        if not account or not account.verify_password(credentials['password'].replace('Bearer ', '', 1) if credentials['password'].startswith('Bearer ') else credentials['password']):
+        if (not account or
+            not account.verify_password(credentials['password'].replace('Bearer ', '', 1)
+                                        if credentials['password'].startswith('Bearer ')
+                                        else credentials['password'])):
             return {'error': 'Invalid credentials'}, 401
 
         is_admin = facade.is_admin(account.id)

@@ -3,19 +3,19 @@ PRAGMA foreign_keys = ON;
 DROP TABLE IF EXISTS Amenity;
 DROP TABLE IF EXISTS Owner;
 DROP TABLE IF EXISTS Places;
-DROP TABLE IF EXISTS  Review;
+DROP TABLE IF EXISTS Review;
 DROP TABLE IF EXISTS Admin;
 DROP TABLE IF EXISTS Users;
 
 
 ------ USERS TABLE ----------------------------
 
-CREATE TABLE Users (
-    id CHAR(36) PRIMARY KEY,
+CREATE TABLE users (
+    id INTEGER(36) PRIMARY KEY,
     first_name VARCHAR(255),
     last_name VARCHAR(255),
     email VARCHAR(255) UNIQUE,
-    password VARCHAR(255),
+    password VARCHAR(255)
     --is_admin: BOOLEAN DEFAULT FALSE
 );
 ------ Admin TABLE ----------------------------
@@ -25,7 +25,7 @@ CREATE TABLE Admin (
     first_name VARCHAR(255),
     last_name VARCHAR(255),
     email VARCHAR(255) UNIQUE,
-    password VARCHAR(255),
+    password VARCHAR(255)
     --is_admin: BOOLEAN DEFAULT FALSE
 );
 ------ Owner TABLE ----------------------------
@@ -35,7 +35,7 @@ CREATE TABLE Owner (
     first_name VARCHAR(255),
     last_name VARCHAR(255),
     email VARCHAR(255) UNIQUE,
-    password VARCHAR(255),
+    password VARCHAR(255)
     --is_admin: BOOLEAN DEFAULT FALSE
 );
 ------ Place TABLE ----------------------------
@@ -64,7 +64,7 @@ CREATE TABLE Review (
 
 CREATE TABLE Amenity (
     id CHAR(36) PRIMARY KEY,
-    name VARCHAR(255) UNIQUE,
+    name VARCHAR(255) UNIQUE
 );
 ------ Place_Amenity TABLE ----------------------------
 

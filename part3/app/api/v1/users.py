@@ -1,6 +1,6 @@
 from flask_jwt_extended import get_jwt, jwt_required
 from flask_restx import Namespace, Resource, fields
-from werkzeug.exceptions import Unauthorized
+from werkzeug.exceptions import Forbidden
 
 from app.services import facade
 
@@ -28,7 +28,7 @@ class UserList(Resource):
 
         current_user = get_jwt()
         if not current_user.get('is_admin'):
-            raise Unauthorized('Unauthorized action')
+            raise Forbidden('Unauthorized action')
 
         try:
 
@@ -66,7 +66,7 @@ class UserList(Resource):
         current_user = get_jwt()
 
         if not current_user.get('is_admin'):
-            raise Unauthorized('Unauthorized action')
+            raise Forbidden('Unauthorized action')
 
         users = facade.get_all_users()
         return [
@@ -90,7 +90,7 @@ class UserResource(Resource):
         current_user = get_jwt()
 
         if not current_user.get('is_admin'):
-            raise Unauthorized('Unauthorized action')
+            raise Forbidden('Unauthorized action')
 
         user = facade.get_user(user_id)
         # old implementation now in facade
@@ -115,7 +115,7 @@ class UserResource(Resource):
         current_user = get_jwt()
 
         if not current_user.get('is_admin'):
-            raise Unauthorized('Unauthorized action')
+            raise Forbidden('Unauthorized action')
 
         user_data = api.payload
 
@@ -153,7 +153,7 @@ class UserResource(Resource):
         """Delete a user"""
         current_user = get_jwt()
         if not current_user.get('is_admin'):
-            raise Unauthorized('Unauthorized action')
+            raise Forbidden('Unauthorized action')
         facade.get_user(user_id)
         facade.delete_user(user_id)
         return {'message': 'User deleted successfully'}, 200

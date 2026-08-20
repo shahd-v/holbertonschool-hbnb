@@ -11,7 +11,7 @@ class User(BaseModel):
     # if the admin exest in the admin table
     # is_admin = False
 
-    __tablename__ = 'users'
+    __tablename__ = 'Users'
     first_name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(120), nullable=False, unique=True)

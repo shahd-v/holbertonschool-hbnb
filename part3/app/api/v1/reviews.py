@@ -1,6 +1,6 @@
-from flask_jwt_extended import get_jwt_identity, jwt_required
+from flask_jwt_extended import get_jwt, get_jwt_identity, jwt_required
 from flask_restx import Namespace, Resource, fields
-from werkzeug.exceptions import Unauthorized
+from werkzeug.exceptions import Forbidden
 
 from app.services import facade
 
@@ -93,7 +93,7 @@ class ReviewResource(Resource):
         if (not current_user.get('is_admin')or
                 not str(current_user_id).strip() ==
                 str(review_data['user_id']).strip()):
-            raise Unauthorized('Unauthorized action')
+            raise Forbidden('Unauthorized action')
         try:
             from app.schemas.review_schema import ReviewUpdateSchema
             ReviewUpdateSchema.validate(review_data)
@@ -121,7 +121,7 @@ class ReviewResource(Resource):
             return {'error': 'Review not found'}, 404
 
         if not str(current_user_id).strip() == str(review['user_id']).strip():
-            raise Unauthorized('Unauthorized action')
+            raise Forbidden('Unauthorized action')
 
         facade.delete_review(review_id)
         return {'message': 'Review deleted successfully'}, 200

@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Environment variables (never commit secrets)
+.env
+
+# Local database files
+*.db
+*.sqlite
+*.sqlite3
+instance/
+
+# macOS
+.DS_Store
+
+# Editors
+.vscode/
+.idea/

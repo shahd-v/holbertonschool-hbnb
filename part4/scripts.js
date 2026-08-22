@@ -14,6 +14,7 @@ const PLACE_IMAGES = [
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
+    initPageLoader();
     checkAuthentication();
 
     const loginForm = document.getElementById('login-form');
@@ -52,6 +53,34 @@ document.addEventListener('DOMContentLoaded', () => {
         initCreateUserPage();
     }
 });
+
+// ---------- Page Loader (hero intro animation) ----------
+function initPageLoader() {
+    const loader = document.getElementById('page-loader');
+    if (!loader) return;
+
+    const MIN_DISPLAY_MS = 900;
+    const start = Date.now();
+    let revealed = false;
+
+    function reveal() {
+        if (revealed) return;
+        revealed = true;
+
+        const elapsed = Date.now() - start;
+        const wait = Math.max(0, MIN_DISPLAY_MS - elapsed);
+
+        setTimeout(() => {
+            document.body.classList.add('is-loaded');
+            loader.addEventListener('transitionend', () => {
+                loader.style.display = 'none';
+            }, { once: true });
+        }, wait);
+    }
+
+    window.addEventListener('load', reveal);
+    setTimeout(reveal, 3500); // safety net in case 'load' stalls
+}
 
 // ---------- Shared Helpers ----------
 function getCookie(name) {

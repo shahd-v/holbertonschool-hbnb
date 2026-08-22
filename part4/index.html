@@ -8,6 +8,19 @@
 </head>
 <body>
 
+    <!-- Loading Intro: hero image expands full-screen while the page loads,
+         then settles back into place as the hero content fades in. -->
+    <div id="page-loader" aria-hidden="true">
+        <div class="page-loader-image" style="background-image: url('Images/hero.jpg');"></div>
+        <span class="page-loader-mark">HBNB</span>
+    </div>
+    <noscript>
+        <style>
+            #page-loader { display: none !important; }
+            .hero-content { opacity: 1 !important; transform: none !important; }
+        </style>
+    </noscript>
+
     <!-- Header Navigation -->
     <header class="navbar">
         <a href="index.html" class="logo">HBNB</a>

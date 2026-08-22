@@ -1,6 +1,6 @@
 from flask_jwt_extended import get_jwt, jwt_required
 from flask_restx import Namespace, Resource, fields
-from werkzeug.exceptions import Unauthorized
+from werkzeug.exceptions import Forbidden
 
 from app.services import facade
 
@@ -26,7 +26,7 @@ class Admin(Resource):
         admin_data = api.payload
         try:
             from app.schemas.user_schema import UserCreateSchema
-            UserCreateSchema.validate(user_data)
+            UserCreateSchema.validate(admin_data)
 
             new_admin = facade.create_admin(admin_data)
 
@@ -47,7 +47,7 @@ class Admin(Resource):
         current_user = get_jwt()
 
         if not current_user.get('is_admin'):
-            raise Unauthorized('Unauthorized action')
+            raise Forbidden('Unauthorized action')
 
         admins = facade.get_all_admins()
         return [
@@ -71,7 +71,7 @@ class AdminResource(Resource):
         current_user = get_jwt()
 
         if not current_user.get('is_admin'):
-            raise Unauthorized('Unauthorized action')
+            raise Forbidden('Unauthorized action')
 
         admin = facade.get_admin(admin_id)
         return {
@@ -93,7 +93,7 @@ class AdminResource(Resource):
         admin_data = api.payload
 
         if not current_user.get('is_admin'):
-            raise Unauthorized('Unauthorized action')
+            raise Forbidden('Unauthorized action')
 
         admin = facade.update_admin(admin_id, admin_data)
         return {

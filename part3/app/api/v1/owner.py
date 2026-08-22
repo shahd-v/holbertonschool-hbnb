@@ -1,6 +1,6 @@
 from flask_jwt_extended import get_jwt, get_jwt_identity, jwt_required
 from flask_restx import Namespace, Resource, fields
-from werkzeug.exceptions import Unauthorized
+from werkzeug.exceptions import Forbidden
 
 from app.services import facade
 
@@ -27,7 +27,7 @@ class Owner(Resource):
         """Register a new owner"""
         current_user = get_jwt()
         if not current_user.get('is_admin'):
-            raise Unauthorized('Unauthorized action')
+            raise Forbidden('Unauthorized action')
 
         owner_data = api.payload
 
@@ -46,13 +46,14 @@ class Owner(Resource):
         except ValueError as e:
             return {'message': str(e)}, 400
 
+    @jwt_required()
     @api.response(200, 'List of owners retrieved successfully')
     @api.response(403, 'Unauthorized action')
     def get(self):
         """Retrieve the list of all owners"""
         current_user = get_jwt()
         if not current_user.get('is_admin'):
-            raise Unauthorized('Unauthorized action')
+            raise Forbidden('Unauthorized action')
         owners = facade.get_all_owners()
         return [
             {
@@ -76,7 +77,7 @@ class OwnerResource(Resource):
 
         if (not current_user.get('is_admin') or
                 not str(current_user_id).strip() == str(owner_id).strip()):
-            raise Unauthorized('Unauthorized action')
+            raise Forbidden('Unauthorized action')
 
         owner = facade.get_owner(owner_id)
         return {
@@ -98,7 +99,7 @@ class OwnerResource(Resource):
 
         if (not current_user.get('is_admin') or
                 not str(current_user_id).strip() == str(owner_id).strip()):
-            raise Unauthorized('Unauthorized action')
+            raise Forbidden('Unauthorized action')
 
         owner_data = api.payload
         try:
@@ -124,7 +125,7 @@ class OwnerResource(Resource):
         """Delete a owner"""
         current_user = get_jwt()
         if not current_user.get('is_admin'):
-            raise Unauthorized('Unauthorized action')
+            raise Forbidden('Unauthorized action')
         facade.get_owner(owner_id)
         facade.delete_owner(owner_id)
         return {'message': 'Owner deleted successfully'}, 200

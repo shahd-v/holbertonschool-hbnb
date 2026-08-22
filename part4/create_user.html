@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create an Account · HBNB</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="split-screen">
+        <div class="split-panel">
+            <div class="split-panel-inner">
+                <a href="index.html" class="split-logo">HBNB</a>
+
+                <h1>Add a new account</h1>
+                <p class="subtitle">Create a guest or host account for the HBNB collection. Admin sign-in required.</p>
+
+                <div class="chip-toggle" id="account-type-toggle">
+                    <button type="button" class="chip active" data-type="user">Guest Account</button>
+                    <button type="button" class="chip" data-type="owner">Host Account</button>
+                </div>
+
+                <form id="create-user-form" class="form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="first-name">First Name</label>
+                            <input type="text" id="first-name" name="first_name" placeholder="Sara" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="last-name">Last Name</label>
+                            <input type="text" id="last-name" name="last_name" placeholder="Alharbi" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="sara@example.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+
+                    <p id="create-user-error" class="error-msg" style="display: none;"></p>
+                    <p id="create-user-success" class="success-msg" style="display: none;"></p>
+
+                    <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+                </form>
+
+                <p class="form-footnote">Already have an account? <a href="login.html">Sign in</a></p>
+            </div>
+        </div>
+
+        <div class="split-photo" style="background-image: url('Images/listing-rooftop-pool.jpg');">
+            <div class="split-photo-caption">
+                <span class="hero-label">KAFD</span>
+                <p class="split-caption-title">Bring the next host or guest into the collection.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

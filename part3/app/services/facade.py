@@ -3,9 +3,8 @@ from werkzeug.exceptions import NotFound
 from app.persistence.admin_repository import AdminRepository
 from app.persistence.amenity_repository import AmenityRepository
 from app.persistence.owner_repository import OwnerRepository
-from app.persistence.review_repository import ReviewRepository
 from app.persistence.place_repository import PlaceRepository
-from app.persistence.repository import SQLAlchemyRepository
+from app.persistence.review_repository import ReviewRepository
 from app.persistence.user_repository import UserRepository
 
 
@@ -215,13 +214,12 @@ class HBnBFacade:
         if not user or not place:
             raise ValueError('Invalid input data')
         review = Review(
-            review_data['rating'],
-            review_data['comment'],
-            place,
-            user
+            rating=review_data['rating'],
+            comment=review_data['comment'],
+            place=place.id,
+            user=user.id
         )
         self.review_repo.add(review)
-        place.add_review(review)              # link it to the place
         return review
 
     def get_review(self, review_id):
@@ -235,7 +233,7 @@ class HBnBFacade:
 
     def get_reviews_by_place(self, place_id):
         reviews = [rev for rev in self.review_repo.get_all()
-            if rev.place.id == place_id]
+            if rev.place == place_id]
         return reviews
 
     def update_review(self, review_id, review_data):

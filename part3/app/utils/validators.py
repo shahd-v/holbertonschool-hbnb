@@ -16,6 +16,7 @@ def validate_input_length(value):
 def validate_empty_input(value):
     if len(value) < 1:
         raise ValueError("Input can not be empty")
+    return True
 
 def validate_price(price):
     if price < 1:
@@ -32,6 +33,7 @@ def validate_lat_and_long(latitude, longitude):
         raise ValueError('Invalid latitude')
     if longitude is None or longitude < -180 or longitude > 180:
         raise ValueError('Invalid longitude')
+    return True
 
 
 

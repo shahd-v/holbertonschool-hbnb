@@ -3,26 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>List of Places</title>
+    <title>HBNB · Stays Above Riyadh</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
+
+    <!-- Header Navigation -->
+    <header class="navbar">
+        <a href="index.html" class="logo">HBNB</a>
         <nav>
-            <a href="login.html" id="login-link">Login</a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Stays</a></li>
+                <li><a href="#">Experiences</a></li>
+                <li><a href="https://www.visitsaudi.com/en" target="_blank" rel="noopener">Riyadh Guide</a></li>
+                <li><a href="login.html">Host With Us</a></li>
+            </ul>
         </nav>
+        <a href="login.html" id="login-link" class="btn btn-ghost">Login</a>
     </header>
-    <main>
-        <section id="filter">
-            <label for="price-filter">Max Price:</label>
-            <select id="price-filter">
-                <!-- Options will be populated dynamically -->
-            </select>
-        </section>
-        <section id="places-list">
-            <!-- List of places will be populated dynamically -->
-        </section>
+
+    <!-- Hero Section -->
+    <section class="hero-section" style="background-image: url('Images/hero.jpg');">
+        <div class="hero-content">
+            <span class="hero-label">RIYADH CURATED COLLECTION</span>
+            <h1 class="display-font">Rare residences with views worth staying up for.</h1>
+        </div>
+    </section>
+
+    <!-- Search & Filter Bar -->
+    <div class="search-bar-container">
+        <form class="search-bar" id="search-form">
+            <div class="search-col">
+                <span class="search-label">WHERE</span>
+                <input type="text" value="Riyadh, Saudi Arabia" readonly>
+            </div>
+            <div class="search-col">
+                <span class="search-label">DATES</span>
+                <input type="text" value="24–28 August">
+            </div>
+            <div class="search-col">
+                <span class="search-label">GUESTS</span>
+                <input type="text" value="4 guests">
+            </div>
+            <div class="search-col">
+                <span class="search-label">MAX PRICE</span>
+                <select id="price-filter">
+                    <option value="">All Prices</option>
+                    <option value="3000">SAR 3,000 / night</option>
+                    <option value="3500" selected>SAR 3,500 / night</option>
+                    <option value="4500">SAR 4,500 / night</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-accent">SEARCH</button>
+        </form>
+    </div>
+
+    <!-- Category Filter Chips -->
+    <div class="filter-chips">
+        <button class="chip active">ALL</button>
+        <button class="chip">SKYLINE VIEWS</button>
+        <button class="chip">PRIVATE POOL</button>
+        <button class="chip">DESERT RETREAT</button>
+        <button class="chip">CHEF SERVICE</button>
+        <button class="chip">MAJLIS</button>
+    </div>
+
+    <!-- Dynamic Places Grid -->
+    <main class="places-grid" id="places-list">
+
+        <!-- Rendered dynamically via scripts.js or static markup fallback -->
+        <article class="place-card">
+            <img src="Images/listing-najdi-suite.jpg" alt="Kingdom Sky Penthouse" class="place-card-img">
+            <div class="place-card-body">
+                <span class="district-label">AL OLAYA</span>
+                <h3>Kingdom Sky Penthouse</h3>
+                <p class="place-specs">4 guests · Infinity pool · Private chef</p>
+                <div class="place-card-footer">
+                    <span class="place-price"><strong>SAR 3,200</strong> / night</span>
+                    <span class="rating">★ 4.96</span>
+                </div>
+            </div>
+        </article>
+
+        <article class="place-card">
+            <img src="Images/listing-desert-retreat.jpg" alt="Najd Stone Retreat" class="place-card-img">
+            <div class="place-card-body">
+                <span class="district-label">DIRIYAH EDGE</span>
+                <h3>Najd Stone Retreat</h3>
+                <p class="place-specs">8 guests · Desert dunes · Majlis</p>
+                <div class="place-card-footer">
+                    <span class="place-price"><strong>SAR 2,750</strong> / night</span>
+                    <span class="rating">★ 4.91</span>
+                </div>
+            </div>
+        </article>
+
+        <article class="place-card">
+            <img src="Images/listing-rooftop-pool.jpg" alt="The Rooftop Residence" class="place-card-img">
+            <div class="place-card-body">
+                <span class="district-label">KAFD</span>
+                <h3>The Rooftop Residence</h3>
+                <p class="place-specs">6 guests · Rooftop pool · Skyline</p>
+                <div class="place-card-footer">
+                    <span class="place-price"><strong>SAR 4,100</strong> / night</span>
+                    <span class="rating">★ 4.88</span>
+                </div>
+            </div>
+        </article>
     </main>
+
     <script src="scripts.js"></script>
 </body>
 </html>

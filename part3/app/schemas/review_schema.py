@@ -13,7 +13,7 @@ class ReviewCreateSchema:
         """Validates fields of the payload."""
         errors = {}
 
-        required_fields = ['rating', 'comment', 'place', 'user']
+        required_fields = ['rating', 'comment', 'place_id', 'user_id']
 
         for field in required_fields:
             if field not in data:

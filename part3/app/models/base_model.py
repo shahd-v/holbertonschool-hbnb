@@ -1,6 +1,8 @@
 import uuid
 from datetime import datetime
+
 from app import db
+
 
 class BaseModel(db.Model):
     __abstract__ = True
@@ -27,8 +29,8 @@ class BaseModel(db.Model):
                 setattr(self, key, value)
         self.save()
 
-    # def delete(self):
-    #     """Remove this object from its class store."""
-    #     store = type(self)._store()
-    #     if self in store:
-    #         store.remove(self)
+    def delete(self):
+        """Remove this object from its class store."""
+        store = type(self)._store()
+        if self in store:
+            store.remove(self)

@@ -15,12 +15,12 @@ bcrypt = Bcrypt()
 def create_app(config_class="config.DevelopmentConfig"):
     app = Flask(__name__)
     app.config.from_object(config_class)
-    
+
     CORS(app, resources={r"/api/*": {"origins": "*"}}) 
 
     api = Api(app, version='1.0', title='HBnB API',
               description='HBnB Application API', doc='/api/v1/')
-    
+
 
     authorizations = {
         'Bearer': {
@@ -55,5 +55,9 @@ def create_app(config_class="config.DevelopmentConfig"):
     api.add_namespace(reviews_ns, path='/api/v1/reviews')
     api.add_namespace(amenities_ns, path='/api/v1/amenities')
     api.add_namespace(auth_ns, path='/api/v1/auth')
+
+    # Make sure every table exists before the first request.
+    with app.app_context():
+        db.create_all()
 
     return app

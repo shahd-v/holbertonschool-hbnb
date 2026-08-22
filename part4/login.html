@@ -3,22 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Login · HBNB</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <main>
-        <form id="login-form">
-            <h2>Login</h2>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-            
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-            
-            <button type="submit">Login</button>
-        </form>
-    </main>
+
+    <div class="split-screen">
+        <div class="split-panel">
+            <div class="split-panel-inner">
+                <a href="index.html" class="split-logo">HBNB</a>
+
+                <h1>Welcome back</h1>
+                <p class="subtitle">Sign in to manage your reservations and saved residences.</p>
+
+                <form id="login-form" class="form">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="sara@example.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+
+                    <p id="login-error" class="error-msg" style="display: none;"></p>
+
+                    <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                </form>
+
+                <p class="form-footnote">New to HBNB? <a href="create_user.html">Create an account</a> · <a href="#">Forgot password?</a></p>
+            </div>
+        </div>
+
+        <div class="split-photo" style="background-image: url('Images/listing-desert-retreat.jpg');">
+            <div class="split-photo-caption">
+                <span class="hero-label">Diriyah Edge</span>
+                <p class="split-caption-title">Where the desert keeps the light a little longer.</p>
+            </div>
+        </div>
+    </div>
+
     <script src="scripts.js"></script>
 </body>
 </html>

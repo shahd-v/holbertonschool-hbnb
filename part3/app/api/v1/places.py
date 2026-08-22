@@ -30,6 +30,25 @@ place_model = api.model('Place', {
     'amenities': fields.List(fields.String, required=True, description="List of amenities ID's")
 })
 
+
+def _serialize_place(place):
+    """Serialize a Place, including its owner and amenity names."""
+    return {
+        'id': place.id,
+        'title': place.title,
+        'description': place.description,
+        'price': place.price,
+        'latitude': place.latitude,
+        'longitude': place.longitude,
+        'owner': {
+            'id': place.Owner.id,
+            'first_name': place.Owner.first_name,
+            'last_name': place.Owner.last_name,
+            'email': place.Owner.email
+        } if getattr(place, 'Owner', None) else None,
+        'amenities': [{'id': a.id, 'name': a.name} for a in place.amenities]
+    }
+
 @api.route('/')
 class PlaceList(Resource):
     @jwt_required()
@@ -72,17 +91,7 @@ class PlaceList(Resource):
     def get(self):
         """Retrieve a list of all places"""
         places = facade.get_all_places()
-        return [
-            {
-                'id': place.id,
-                'title': place.title,
-                'description': place.description,
-                'price': place.price,
-                'latitude': place.latitude,
-                'longitude': place.longitude,
-                'amenities': place.amenities
-            } for place in places
-        ], 200
+        return [_serialize_place(place) for place in places], 200
 
 @api.route('/<place_id>')
 class PlaceResource(Resource):
@@ -92,15 +101,7 @@ class PlaceResource(Resource):
     def get(self, place_id):
         """Get place details by ID"""
         place = facade.get_place(place_id)
-        return {
-            'id': place.id,
-            'title': place.title,
-            'description': place.description,
-            'price': place.price,
-            'latitude': place.latitude,
-            'longitude': place.longitude,
-            'amenities': place.amenities
-        }, 200
+        return _serialize_place(place), 200
 
     @api.expect(place_model)
     @api.response(200, 'Place updated successfully')
@@ -156,10 +157,17 @@ class PlaceReviewList(Resource):
     def get(self, place_id):
         """Get all reviews for a specific place"""
         reviews = facade.get_reviews_by_place(place_id)
-        return [
-            {
+        out = []
+        for rev in reviews:
+            author = facade.user_repo.get(rev.user)
+            out.append({
                 'id': rev.id,
                 'comment': rev.comment,
-                'rating': rev.rating
-            } for rev in reviews
-        ], 200
+                'rating': rev.rating,
+                'user': {
+                    'id': author.id,
+                    'first_name': author.first_name,
+                    'last_name': author.last_name
+                } if author else None
+            })
+        return out, 200

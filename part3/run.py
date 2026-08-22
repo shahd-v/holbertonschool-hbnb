@@ -14,4 +14,4 @@ if __name__ == '__main__':
     # if APP_DEBUG in .env or defaults to true
     debug_mode = os.environ.get('APP_DEBUG', 'False').lower() == 'true'
 
-    app.run(debug=True)
+    app.run(debug=True, port=5001)

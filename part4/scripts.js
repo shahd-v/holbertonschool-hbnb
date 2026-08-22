@@ -456,9 +456,12 @@ async function createAccount(token, accountType, payload, form) {
         } else if (response.status === 403) {
             errorEl.textContent = 'Only an admin can create new accounts.';
             errorEl.style.display = 'block';
+        } else if (response.status === 401) {
+            errorEl.textContent = 'Your session has expired. Please sign in again.';
+            errorEl.style.display = 'block';
         } else {
             const errData = await response.json().catch(() => ({}));
-            errorEl.textContent = errData.message || 'Failed to create account.';
+            errorEl.textContent = errData.message || errData.msg || 'Failed to create account.';
             errorEl.style.display = 'block';
         }
     } catch (err) {

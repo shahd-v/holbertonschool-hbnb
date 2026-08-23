@@ -28,7 +28,7 @@ class UserList(Resource):
 
         current_user = get_jwt()
         if not current_user.get('is_admin'):
-            raise Forbidden('Unauthorized action')
+            return ('Unauthorized action'), 403
 
         try:
 
@@ -48,14 +48,6 @@ class UserList(Resource):
 
         except ValueError as e:
             return {'message': str(e)}, 400
-        # old implementation now in model
-        # existing_user = facade.get_user_by_email(user_data['email'])
-        # if existing_user:
-        #     return {'error': 'Email already registered'}, 400
-        # email = user_data.get('email')
-        # if not validate_email(email):
-        #     return {'error': 'Invalid email format'}, 400
-
 
 
     @jwt_required()
@@ -66,7 +58,7 @@ class UserList(Resource):
         current_user = get_jwt()
 
         if not current_user.get('is_admin'):
-            raise Forbidden('Unauthorized action')
+            return ('Unauthorized action'), 403
 
         users = facade.get_all_users()
         return [
@@ -90,7 +82,7 @@ class UserResource(Resource):
         current_user = get_jwt()
 
         if not current_user.get('is_admin'):
-            raise Forbidden('Unauthorized action')
+            return ('Unauthorized action'), 403
 
         user = facade.get_user(user_id)
         # old implementation now in facade
@@ -115,7 +107,7 @@ class UserResource(Resource):
         current_user = get_jwt()
 
         if not current_user.get('is_admin'):
-            raise Forbidden('Unauthorized action')
+            return ('Unauthorized action'), 403
 
         user_data = api.payload
 
@@ -153,7 +145,7 @@ class UserResource(Resource):
         """Delete a user"""
         current_user = get_jwt()
         if not current_user.get('is_admin'):
-            raise Forbidden('Unauthorized action')
+            return ('Unauthorized action'), 403
         facade.get_user(user_id)
         facade.delete_user(user_id)
         return {'message': 'User deleted successfully'}, 200

@@ -1,8 +1,6 @@
 from flask_jwt_extended import get_jwt, get_jwt_identity, jwt_required
 from flask_restx import Namespace, Resource, fields
-from werkzeug.exceptions import Forbidden
 
-from app.models import place
 from app.services import facade
 
 api = Namespace('places', description='Place operations')
@@ -61,7 +59,7 @@ class PlaceList(Resource):
         current_user = get_jwt()
         if (not current_user.get('is_admin') or
                 current_user.get('is_owner')):
-            raise Forbidden('Owner or admin privileges required')
+            return ('Unauthorized action'), 403
 
         account_id = get_jwt_identity()
 
@@ -116,7 +114,7 @@ class PlaceResource(Resource):
         current_user = get_jwt()
         if (not current_user.get('is_admin') or
                 current_user.get('is_owner')):
-            raise Forbidden('Unauthorized action')
+            return ('Unauthorized action'), 403
 
         place_data = api.payload
 
@@ -145,7 +143,7 @@ class PlaceResource(Resource):
         """Delete a place"""
         current_user = get_jwt()
         if not current_user.get('is_admin'):
-            raise Forbidden('Unauthorized action')
+            return ('Unauthorized action'), 403
         facade.get_place(place_id)
         facade.delete_place(place_id)
         return {'message': 'Place deleted successfully'}, 200

@@ -93,7 +93,7 @@ class ReviewResource(Resource):
         if (not current_user.get('is_admin')or
                 not str(current_user_id).strip() ==
                 str(review_data['user_id']).strip()):
-            raise Forbidden('Unauthorized action')
+            return ('Unauthorized action'), 403
         try:
             from app.schemas.review_schema import ReviewUpdateSchema
             ReviewUpdateSchema.validate(review_data)
@@ -120,8 +120,8 @@ class ReviewResource(Resource):
         if not review:
             return {'error': 'Review not found'}, 404
 
-        if not str(current_user_id).strip() == str(review['user_id']).strip():
-            raise Forbidden('Unauthorized action')
+        if str(current_user_id).strip() != str(review['user_id']).strip():
+            return ('Unauthorized action'), 403
 
         facade.delete_review(review_id)
         return {'message': 'Review deleted successfully'}, 200

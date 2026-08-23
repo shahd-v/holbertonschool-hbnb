@@ -27,7 +27,7 @@ class Owner(Resource):
         """Register a new owner"""
         current_user = get_jwt()
         if not current_user.get('is_admin'):
-            raise Forbidden('Unauthorized action')
+            return ('Unauthorized action'), 403
 
         owner_data = api.payload
 
@@ -53,7 +53,7 @@ class Owner(Resource):
         """Retrieve the list of all owners"""
         current_user = get_jwt()
         if not current_user.get('is_admin'):
-            raise Forbidden('Unauthorized action')
+            return ('Unauthorized action'), 403
         owners = facade.get_all_owners()
         return [
             {
@@ -77,7 +77,7 @@ class OwnerResource(Resource):
 
         if (not current_user.get('is_admin') or
                 not str(current_user_id).strip() == str(owner_id).strip()):
-            raise Forbidden('Unauthorized action')
+            return ('Unauthorized action'), 403
 
         owner = facade.get_owner(owner_id)
         return {
@@ -99,7 +99,7 @@ class OwnerResource(Resource):
 
         if (not current_user.get('is_admin') or
                 not str(current_user_id).strip() == str(owner_id).strip()):
-            raise Forbidden('Unauthorized action')
+            return ('Unauthorized action'), 403
 
         owner_data = api.payload
         try:
@@ -125,7 +125,7 @@ class OwnerResource(Resource):
         """Delete a owner"""
         current_user = get_jwt()
         if not current_user.get('is_admin'):
-            raise Forbidden('Unauthorized action')
+            return ('Unauthorized action'), 403
         facade.get_owner(owner_id)
         facade.delete_owner(owner_id)
         return {'message': 'Owner deleted successfully'}, 200

@@ -1,4 +1,4 @@
-from sqlalchemy import ForeignKey, Integer
+from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
 
 from app import db
@@ -10,19 +10,19 @@ class Place(BaseModel):
     __tablename__ = 'places'
 
     place_amenities = db.Table('place_amenities',
-                               db.Column('place_id', db.String(36), db.ForeignKey('places.id'),
-                                         primary_key=True),
-                               db.Column('amenity_id', db.String(36), db.ForeignKey('amenity.id'),
-                                         primary_key=True)
+                    db.Column('place_id', db.String(36), db.ForeignKey('places.id'),
+                                primary_key=True),
+                    db.Column('amenity_id', db.String(36), db.ForeignKey('amenity.id'),
+                                primary_key=True)
                                             )
     title = db.Column(db.String(50), nullable=False)
     description = db.Column(db.String(1024), nullable=False)
     price = db.Column(db.Integer, nullable=False)
     latitude = db.Column(db.Integer, nullable=False)
     longitude = db.Column(db.Integer, nullable=False)
-    owner_id = db.Column(db.String(36), ForeignKey(Owner.id), nullable=False)
+    owner_id = db.Column(db.String(36), ForeignKey('Owner.id'), nullable=False)
     reviews = relationship('Review', backref='Places', lazy=True)
-    amenities = relationship('Amenity', secondary=place_amenities, backref='places', lazy=True)
+    amenities = relationship('Amenity', secondary='place_amenities', backref='places', lazy=True)
 
 
     def add_review(self, review):

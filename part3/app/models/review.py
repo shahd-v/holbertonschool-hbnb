@@ -7,11 +7,11 @@ from app.models.user import User
 
 
 class Review(BaseModel):
-    __tablename__ = 'review'
-    rating = db.Column(Integer, nullable=False)
+    __tablename__ = 'reviews'
+    rating = db.Column(db.Integer, nullable=False)
     comment = db.Column(db.String(1024), nullable=False)
-    place = db.Column(db.String(36), ForeignKey(Place.id), nullable=False)
-    user = db.Column(db.String(36), ForeignKey(User.id), nullable=False)
+    place_id = db.Column(db.String(36), ForeignKey('Place.id'), nullable=False)
+    user_id = db.Column(db.String(36), ForeignKey('User.id'), nullable=False)
 
     def update_rev(self, data):
         self.update(data)

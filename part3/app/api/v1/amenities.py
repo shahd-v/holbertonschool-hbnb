@@ -1,6 +1,5 @@
 from flask_jwt_extended import get_jwt, jwt_required
 from flask_restx import Namespace, Resource, fields
-from werkzeug.exceptions import Forbidden
 
 from app.services import facade
 
@@ -25,7 +24,7 @@ class AmenityList(Resource):
 
         current_user = get_jwt()
         if not current_user.get('is_admin'):
-            raise Forbidden('Unauthorized action')
+            return ('Unauthorized action'), 403
 
         try:
 
@@ -49,7 +48,7 @@ class AmenityList(Resource):
         current_user = get_jwt()
 
         if not current_user.get('is_admin'):
-            raise Forbidden('Unauthorized action')
+            return ('Unauthorized action'), 403
 
         amenities = facade.get_all_amenities()
         return [
@@ -71,7 +70,7 @@ class AmenityResource(Resource):
         current_user = get_jwt()
 
         if not current_user.get('is_admin'):
-            raise Forbidden('Unauthorized action')
+            return ('Unauthorized action'), 403
 
         amenity = facade.get_amenity(amenity_id)
         return {
@@ -92,7 +91,7 @@ class AmenityResource(Resource):
         current_user = get_jwt()
 
         if not current_user.get('is_admin'):
-            raise Forbidden('Unauthorized action')
+            return ('Unauthorized action'), 403
 
         amenity_data = api.payload
 

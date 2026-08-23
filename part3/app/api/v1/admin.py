@@ -47,7 +47,7 @@ class Admin(Resource):
         current_user = get_jwt()
 
         if not current_user.get('is_admin'):
-            raise Forbidden('Unauthorized action')
+            return ('Unauthorized action'), 403
 
         admins = facade.get_all_admins()
         return [
@@ -71,7 +71,7 @@ class AdminResource(Resource):
         current_user = get_jwt()
 
         if not current_user.get('is_admin'):
-            raise Forbidden('Unauthorized action')
+            return ('Unauthorized action'), 403
 
         admin = facade.get_admin(admin_id)
         return {
@@ -93,7 +93,7 @@ class AdminResource(Resource):
         admin_data = api.payload
 
         if not current_user.get('is_admin'):
-            raise Forbidden('Unauthorized action')
+            return ('Unauthorized action'), 403
 
         admin = facade.update_admin(admin_id, admin_data)
         return {

@@ -165,17 +165,6 @@ class HBnBFacade:
     # ---------------- Place ----------------
     def create_place(self, place_data):
         from app.models.place import Place
-        # old implementation new in model
-        # price = place_data.get('price')
-        # latitude = place_data.get('latitude')
-        # longitude = place_data.get('longitude')
-        #
-        # if price is None or price < 0:
-        #     raise ValueError("Invalid price")
-        # if latitude is None or latitude < -90 or latitude > 90:
-        #     raise ValueError("Invalid latitude")
-        # if longitude is None or longitude < -180 or longitude > 180:
-        #     raise ValueError("Invalid longitude")
 
         owner_id = place_data.get('owner_id')
         self.get_owner(owner_id)
@@ -208,17 +197,13 @@ class HBnBFacade:
 
     # ---------------- Review ----------------
     def create_review(self, review_data):
+        self.review_repo.check_rev_exist(review_data)
         from app.models.review import Review
         user = self.get_user(review_data['user_id'])
         place = self.get_place(review_data['place_id'])
         if not user or not place:
             raise ValueError('Invalid input data')
-        review = Review(
-            rating=review_data['rating'],
-            comment=review_data['comment'],
-            place=place.id,
-            user=user.id
-        )
+        review = Review(**review_data)
         self.review_repo.add(review)
         return review
 

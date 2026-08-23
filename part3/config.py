@@ -12,8 +12,6 @@ class DevelopmentConfig(Config):
     '''Development enironment.'''
     DEBUG = os.getenv('APP_DEBUG')
     SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
-    # SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'sqlite:///' +
-    #     os.path.join(Config.BASE_DIR, 'development.db'))
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 

@@ -1,4 +1,4 @@
-PRAGMA foreign_keys = 0;
+SET FOREIGN_KEY_CHECKS = 0;
 
 DROP TABLE IF EXISTS place_amenities;
 DROP TABLE IF EXISTS amenities;
@@ -8,7 +8,7 @@ DROP TABLE IF EXISTS reviews;
 DROP TABLE IF EXISTS admins;
 DROP TABLE IF EXISTS users;
 
-PRAGMA foreign_keys = 1;
+SET FOREIGN_KEY_CHECKS = 1;
 
 ------ USERS TABLE ----------------------------
 

@@ -3,8 +3,6 @@ from sqlalchemy.orm import relationship
 
 from app import db
 from app.models.base_model import BaseModel
-from app.models.user import User
-from app.services import facade
 
 
 class Owner(BaseModel):

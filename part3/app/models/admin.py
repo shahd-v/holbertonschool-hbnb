@@ -7,7 +7,7 @@ from app.services import facade
 
 class Admin(BaseModel):
     """Admin user with capabilities to manage users, places, amenities, and reviews."""
-    __tablename__ = 'admin'
+    __tablename__ = 'admins'
     first_name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(120), nullable=False, unique=True)

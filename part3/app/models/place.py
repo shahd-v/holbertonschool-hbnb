@@ -3,7 +3,6 @@ from sqlalchemy.orm import relationship
 
 from app import db
 from app.models.base_model import BaseModel
-from app.models.owner import Owner
 
 
 class Place(BaseModel):

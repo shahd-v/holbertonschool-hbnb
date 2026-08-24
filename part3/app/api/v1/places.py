@@ -35,7 +35,7 @@ def _serialize_place(place):
         'id': place.id,
         'title': place.title,
         'description': place.description,
-        'price': place.price,
+        'price': float(place.price),
         'latitude': place.latitude,
         'longitude': place.longitude,
         'owner': {
@@ -79,7 +79,7 @@ class PlaceList(Resource):
             'id': new_place.id,
             'title': new_place.title,
             'description': new_place.description,
-            'price': new_place.price,
+            'price': float(new_place.price),
             'latitude': new_place.latitude,
             'longitude': new_place.longitude,
             'amenities': new_place.amenities
@@ -128,7 +128,7 @@ class PlaceResource(Resource):
                 'id': updated.id,
                 'title': updated.title,
                 'description': updated.description,
-                'price': updated.price,
+                'price': float(updated.price),
                 'latitude': updated.latitude,
                 'longitude': updated.longitude,
                 'amenities': updated.amenities
@@ -157,7 +157,7 @@ class PlaceReviewList(Resource):
         reviews = facade.get_reviews_by_place(place_id)
         out = []
         for rev in reviews:
-            author = facade.user_repo.get(rev.user)
+            author = facade.user_repo.get(rev.user_id)
             out.append({
                 'id': rev.id,
                 'comment': rev.comment,

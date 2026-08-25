@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiences · HBNB</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <a href="index.html" class="logo">HBNB</a>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Stays</a></li>
+                <li><a href="reviews.html" class="active">Experiences</a></li>
+                <li><a href="https://www.visitsaudi.com/en" target="_blank" rel="noopener">Riyadh Guide</a></li>
+                <li><a href="login.html">Host With Us</a></li>
+            </ul>
+        </nav>
+        <a href="login.html" id="login-link" class="btn btn-ghost">Login</a>
+    </header>
+
+    <section class="hero-section hero-section--short" style="background-image: url('Images/listing-rooftop-pool.jpg');">
+        <div class="hero-content">
+            <span class="hero-label">Guest Stories</span>
+            <h1 class="display-font">What it feels like to stay.</h1>
+        </div>
+    </section>
+
+    <div class="filter-chips" id="review-filter-chips">
+        <button class="chip active" data-place-id="all">All Residences</button>
+        <!-- Per-place chips injected by scripts.js -->
+    </div>
+
+    <main class="reviews-grid" id="all-reviews">
+        <p>Loading reviews…</p>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 HBNB. All rights reserved.</p>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

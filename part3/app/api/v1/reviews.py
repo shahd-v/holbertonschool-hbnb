@@ -41,8 +41,8 @@ class ReviewList(Resource):
                 'id': review.id,
                 'comment': review.comment,
                 'rating': review.rating,
-                'user_id': review.user,
-                'place_id': review.place
+                'user_id': review.user_id,
+                'place_id': review.place_id
             }, 201
         except ValueError as e:
             return {'message': str(e)}, 400
@@ -74,8 +74,8 @@ class ReviewResource(Resource):
             'id': review.id,
             'comment': review.comment,
             'rating': review.rating,
-            'user_id': review.user.id,
-            'place_id': review.place.id
+            'user_id': review.user_id,
+            'place_id': review.place_id
         }, 200
 
     @api.expect(review_model)
@@ -120,7 +120,7 @@ class ReviewResource(Resource):
         if not review:
             return {'error': 'Review not found'}, 404
 
-        if str(current_user_id).strip() != str(review['user_id']).strip():
+        if str(current_user_id).strip() != str(review.user_id).strip():
             return ('Unauthorized action'), 403
 
         facade.delete_review(review_id)

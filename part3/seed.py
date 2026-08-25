@@ -103,11 +103,11 @@ def seed():
         # ---------------- Reviews ----------------
         db.session.add_all([
             Review(rating=5, comment='Amazing stay, the view was unreal!',
-                   place=beach.id, user=user.id),
+                   place_id=beach.id, user_id=user.id),
             Review(rating=4, comment='Very clean and quiet. Would come back.',
-                   place=beach.id, user=user.id),
+                   place_id=beach.id, user_id=user.id),
             Review(rating=3, comment='Nice and peaceful, but a long drive.',
-                   place=cabin.id, user=user.id),
+                   place_id=cabin.id, user_id=user.id),
         ])
         db.session.commit()
 

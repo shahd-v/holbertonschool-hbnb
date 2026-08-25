@@ -2,7 +2,7 @@
   HBnB - Part 4: Main Client Logic (Riyadh Luxury Edition)
 */
 
-const API_BASE_URL = 'http://127.0.0.1:5001/api/v1';
+const API_BASE_URL = 'http://127.0.0.1:5000/api/v1';
 
 const PLACE_IMAGES = [
     'Images/listing-najdi-suite.jpg',
@@ -51,6 +51,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (document.getElementById('create-user-form')) {
         initCreateUserPage();
+    }
+
+    if (document.getElementById('all-reviews')) {
+        initReviewsPage();
     }
 });
 
@@ -241,19 +245,72 @@ function initPlacePage() {
     }
 
     fetchPlaceDetails(token, placeId);
+    initInlineReviewForm(token, placeId);
+}
 
-    const addReviewSection = document.getElementById('add-review');
-    if (addReviewSection) {
-        if (token) {
-            addReviewSection.style.display = 'block';
-            addReviewSection.innerHTML = `
-                <a href="add_review.html?id=${placeId}" class="details-button">Add a Review</a>
-            `;
-        } else {
-            addReviewSection.style.display = 'none';
-        }
+function initInlineReviewForm(token, placeId) {
+    const form = document.getElementById('review-form');
+    if (!form) return;
+
+    const signedOutHint = document.getElementById('write-review-signed-out');
+
+    if (!token) {
+        form.style.display = 'none';
+        if (signedOutHint) signedOutHint.style.display = 'block';
+        return;
     }
 
+    initStarRating();
+
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const errorEl = document.getElementById('review-error');
+        const successEl = document.getElementById('review-success');
+        errorEl.style.display = 'none';
+        successEl.style.display = 'none';
+
+        const text = document.getElementById('review-text').value;
+        const ratingInput = document.getElementById('rating');
+        const rating = ratingInput ? parseInt(ratingInput.value, 10) : 5;
+
+        const result = await submitInlineReview(token, placeId, text, rating);
+
+        if (result.ok) {
+            successEl.textContent = 'Thank you — your review has been published.';
+            successEl.style.display = 'block';
+            form.reset();
+            ratingInput.value = '5';
+            highlightStars('star-rating', 5);
+            fetchPlaceDetails(token, placeId);
+        } else {
+            errorEl.textContent = result.message;
+            errorEl.style.display = 'block';
+        }
+    });
+}
+
+async function submitInlineReview(token, placeId, text, rating) {
+    try {
+        const response = await fetch(`${API_BASE_URL}/reviews/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ comment: text, rating: rating, place_id: placeId })
+        });
+
+        if (response.ok) {
+            return { ok: true };
+        }
+        if (response.status === 401) {
+            return { ok: false, message: 'Your session has expired. Please sign in again.' };
+        }
+        const errData = await response.json().catch(() => ({}));
+        return { ok: false, message: errData.message || errData.msg || 'Failed to submit review.' };
+    } catch (err) {
+        return { ok: false, message: 'Network error: ' + err.message };
+    }
 }
 
 async function fetchPlaceDetails(token, placeId) {
@@ -352,6 +409,103 @@ function displayReviews(reviews) {
     });
 }
 
+//  Task 3b: Experiences / All Reviews Page 
+function initReviewsPage() {
+    const token = checkAuthentication();
+    fetchAllReviews(token);
+}
+
+async function fetchAllReviews(token) {
+    const container = document.getElementById('all-reviews');
+    if (!container) return;
+
+    try {
+        const headers = { 'Content-Type': 'application/json' };
+        if (token) headers['Authorization'] = `Bearer ${token}`;
+
+        const placesResponse = await fetch(`${API_BASE_URL}/places/`, { headers });
+        if (!placesResponse.ok) throw new Error('Failed to load places');
+        const places = await placesResponse.json();
+
+        const entries = [];
+        for (let i = 0; i < places.length; i++) {
+            const place = places[i];
+            const image = PLACE_IMAGES[i % PLACE_IMAGES.length];
+            const reviewsResponse = await fetch(`${API_BASE_URL}/places/${place.id}/reviews`, { headers });
+            if (!reviewsResponse.ok) continue;
+            const reviews = await reviewsResponse.json();
+            reviews.forEach((review) => entries.push({ place, image, review }));
+        }
+
+        renderAllReviews(entries);
+        renderReviewFilterChips(places, entries);
+    } catch (err) {
+        console.error('Failed to load reviews:', err);
+        container.innerHTML = '<p>Unable to load reviews right now.</p>';
+    }
+}
+
+function renderAllReviews(entries, filterId) {
+    const container = document.getElementById('all-reviews');
+    if (!container) return;
+
+    const filtered = filterId && filterId !== 'all'
+        ? entries.filter((entry) => entry.place.id === filterId)
+        : entries;
+
+    container.innerHTML = '';
+
+    if (filtered.length === 0) {
+        container.innerHTML = '<p>No reviews yet.</p>';
+        return;
+    }
+
+    filtered.forEach(({ place, image, review }) => {
+        const card = document.createElement('article');
+        card.className = 'review-card';
+        const author = review.user ? review.user.first_name : 'Guest';
+        const ratingNum = review.rating || 5;
+        const stars = '★'.repeat(ratingNum) + '☆'.repeat(5 - ratingNum);
+
+        card.innerHTML = `
+            <div class="review-card-header">
+                <img src="${image}" alt="" class="review-card-thumb">
+                <div class="review-card-place-info">
+                    <a href="place.html?id=${place.id}" class="review-card-place">${place.title || place.name}</a>
+                    <span class="rating">${stars}</span>
+                </div>
+            </div>
+            <p class="review-card-author">${author}</p>
+            <p>"${review.comment || review.text}"</p>
+        `;
+        container.appendChild(card);
+    });
+}
+
+function renderReviewFilterChips( places, entries) {
+    const chipsContainer = document.getElementById('review-filter-chips');
+    if (!chipsContainer) return;
+
+    places
+        .filter((place) => entries.some((entry) => entry.place.id === place.id))
+        .forEach((place) => {
+            const chip = document.createElement('button');
+            chip.className = 'chip';
+            chip.dataset.placeId = place.id;
+            chip.textContent = place.title || place.name;
+            chipsContainer.appendChild(chip);
+        });
+
+    const chips = Array.from(chipsContainer.querySelectorAll('.chip'));
+    chips.forEach((chip) => {
+        chip.addEventListener('click', () => {
+            chips.forEach((c) => c.classList.remove('active'));
+            chip.classList.add('active');
+            renderAllReviews(entries, chip.dataset.placeId || 'all');
+        });
+    });
+}
+
 // ---------- Task 4: Add Review Page ----------
 function initAddReviewPage() {
     const token = checkAuthentication();
@@ -397,27 +551,29 @@ async function fetchPlaceNameForReview(token, placeId) {
     }
 }
 
-function initStarRating() {
-    const starRating = document.getElementById('star-rating');
-    const ratingInput = document.getElementById('rating');
+function highlightStars(containerId, value) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    container.querySelectorAll('.star').forEach((star) => {
+        star.classList.toggle('selected', parseInt(star.dataset.value, 10) <= value);
+    });
+}
+
+function initStarRating(containerId = 'star-rating', inputId = 'rating') {
+    const starRating = document.getElementById(containerId);
+    const ratingInput = document.getElementById(inputId);
     if (!starRating || !ratingInput) return;
 
-    const stars = Array.from(starRating.querySelectorAll('.star'));
+    highlightStars(containerId, parseInt(ratingInput.value, 10));
 
-    function highlight(value) {
-        stars.forEach((star) => {
-            const starValue = parseInt(star.dataset.value, 10);
-            star.classList.toggle('selected', starValue <= value);
-        });
-    }
+    if (starRating.dataset.initialized) return;
+    starRating.dataset.initialized = 'true';
 
-    highlight(parseInt(ratingInput.value, 10));
-
-    stars.forEach((star) => {
+    starRating.querySelectorAll('.star').forEach((star) => {
         star.addEventListener('click', () => {
             const value = parseInt(star.dataset.value, 10);
             ratingInput.value = value;
-            highlight(value);
+            highlightStars(containerId, value);
         });
     });
 }
